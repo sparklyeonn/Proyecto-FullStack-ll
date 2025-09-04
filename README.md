@@ -1,4 +1,4 @@
-# Tienda de Música - Mi Tienda Musical 🎵
+# Tienda de Música - RitmoLab 🎵
 
 ## 📄 Descripción del Proyecto
 
