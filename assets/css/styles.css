@@ -1,0 +1,131 @@
+/* Paleta de colores que elegimos desde el sitio: paletadecolores.com.mx */
+:root {
+    --color-principal: #efac41;
+    --color-secundario: #de8531;
+    --color-acentos: #b32900;
+    --color-texto: #6c1305;
+    --color-fondo: #330a04;
+}
+
+/* Estilos del body de la página */
+body {
+    font-family: 'Fascinate Inline', sans-serif;
+    background-color: var(--color-fondo);
+    color: var(--color-principal);
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilos del encabezado y la navegación */
+header {
+    background-color: var(--color-texto);
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    color: var(--color-principal);
+    margin: 0;
+    font-size: 3em;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--color-secundario);
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+nav a:hover {
+    color: var(--color-principal);
+}
+
+/* Estilos de las secciones principales */
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+.welcome h2, .featured-products h2 {
+    color: var(--color-acentos);
+    font-size: 2.5em;
+    margin-top: 40px;
+}
+
+.featured-products {
+    margin-top: 50px;
+}
+
+.product-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.product-item {
+    background-color: var(--color-texto);
+    border: 2px solid var(--color-acentos);
+    padding: 20px;
+    border-radius: 10px;
+    width: 250px;
+    text-align: center;
+}
+
+.product-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.product-item h3 {
+    color: var(--color-principal);
+    margin: 10px 0;
+}
+
+.product-item p {
+    margin: 5px 0;
+    color: var(--color-secundario);
+}
+
+.price {
+    font-weight: bold;
+    color: var(--color-secundario);
+    font-size: 1.4em;
+    margin: 10px 0;
+}
+
+button {
+    background-color: var(--color-acentos);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: var(--color-secundario);
+}
+
+/* Estilos del Footer */
+footer {
+    background-color: var(--color-texto);
+    color: var(--color-principal);
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
