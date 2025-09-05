@@ -1,4 +1,4 @@
-/* Paleta de colores que elegimos desde el sitio: paletadecolores.com.mx */
+/* Paleta de colores. La elegimos desde paletadecolores.com.mx */
 :root {
     --color-principal: #efac41;
     --color-secundario: #de8531;
@@ -7,16 +7,28 @@
     --color-fondo: #330a04;
 }
 
-/* Estilos del body de la página */
+/* Estilo general de la pag */
 body {
-    font-family: 'Fascinate Inline', sans-serif;
     background-color: var(--color-fondo);
     color: var(--color-principal);
     margin: 0;
     padding: 0;
 }
 
-/* Estilos del encabezado y la navegación */
+/* Tipografías de Google Fonts, cada una se usa dependiendo de si es h1, h2 o h3 (o más) */
+h1 {
+    font-family: 'Fascinate Inline', cursive;
+}
+
+h2, h3 {
+    font-family: 'Fascinate', cursive;
+}
+
+p, span, button {
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+/* Código del Body */
 header {
     background-color: var(--color-texto);
     padding: 20px;
@@ -50,7 +62,6 @@ nav a:hover {
     color: var(--color-principal);
 }
 
-/* Estilos de las secciones principales */
 main {
     padding: 20px;
     text-align: center;
@@ -119,7 +130,7 @@ button:hover {
     background-color: var(--color-secundario);
 }
 
-/* Estilos del Footer */
+/* Estilo del Footer */
 footer {
     background-color: var(--color-texto);
     color: var(--color-principal);
