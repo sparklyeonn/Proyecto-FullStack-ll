@@ -23,6 +23,39 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fascinate&family=Fascinate+Inline&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+
+    <script>
+        function validateForm() {
+            const nombre = document.getElementById('nombre').value;
+            const email = document.getElementById('email').value;
+            const mensaje = document.getElementById('mensaje').value;
+
+            if (nombre.trim() === '') {
+                alert('Por favor, ingresa tu nombre.');
+                return false;
+            }
+
+            if (email.trim() === '') {
+                alert('Por favor, ingresa tu correo electrónico.');
+                return false;
+            }
+
+            if (mensaje.trim() === '') {
+                alert('Por favor, escribe tu mensaje.');
+                return false;
+            }
+
+            // Validacion simple para el formato de correo:
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Por favor, ingresa un correo electrónico válido.');
+                return false;
+            }
+
+            alert('¡Formulario enviado con éxito!');
+            return true; 
+        }
+    </script>
 </head>
 
 <body>
