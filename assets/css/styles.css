@@ -1,10 +1,10 @@
 /* Paleta de colores. La elegimos desde paletadecolores.com.mx */
 :root {
-    --color-principal: ;
-    --color-secundario: ;
-    --color-acentos: ;
-    --color-texto: ;
-    --color-fondo: ;
+    --color-principal: #444444; /* Color de titulos, subtitulos, lineas y bordes de tarjetas. */
+    --color-secundario: #8c0005; /* Color de menú superior y letras de cada tarjeta */
+    --color-acentos: #b52c00; /* Color solo titulo, botones y lineas de tarjetas */
+    --color-texto: #fcf7d1; /* Color de relleno de header, footer y tarjetas */
+    --color-fondo: #a9a17a; /* Color de fondo */
 }
 
 /* Estilo general de la pag */
@@ -127,6 +127,71 @@ button {
 }
 
 button:hover {
+    background-color: var(--color-secundario);
+}
+
+/* Estilos para la página de Contacto */
+.contact-section {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: var(--color-texto);
+    border: 2px solid var(--color-principal);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.contact-section h2, 
+.contact-section p {
+    text-align: center;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--color-principal);
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    border: 1px solid var(--color-principal);
+    border-radius: 5px;
+    background-color: var(--color-fondo);
+    color: var(--color-principal);
+    font-family: 'Red Hat Display', sans-serif;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-acentos);
+}
+
+.contact-form button {
+    background-color: var(--color-acentos);
+    color: white;
+    border: none;
+    padding: 15px;
+    font-size: 1.1em;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.contact-form button:hover {
     background-color: var(--color-secundario);
 }
 
