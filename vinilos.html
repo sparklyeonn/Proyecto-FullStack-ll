@@ -26,14 +26,29 @@
 </head>
 
 <body>
-  <nav>
-    <a href="index.html">Volver a la página principal</a>
-  </nav>
 
+<header>
+        <div class="logo">
+            <h1>Ritmo Lab</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="cds.html">CDs</a></li>
+                <li><a href="vinilos.html">Vinilos</a></li>
+                <li><a href="accesorios.html">Accesorios</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
   <main>
-    <h1>Vinilos</h1>
+    <section class="welcome">
+      <h2>Colección de Vinilos</h2>
+      <p>Explora nuestra exclusiva colección de vinilos y encuentra tus álbumes favoritos.</p>
+    </section>
 
     <section class="vinilos">
+      <div class="product-grid">
       <article class="product-item">
         <img src="assets/img/album-vessel.jpeg" alt="Vinilo Vessel - Twenty One Pilots">
         <p>Vessel - Twenty One Pilots</p>
@@ -51,7 +66,7 @@
       </article>
 
       <article class="product-item">
-        <img src="assets/img/trench-twentyonepilots.webp" alt="Vinilo Trench - Twenty One Pilots">
+        <img src="assets/img/album-trench.webp" alt="Vinilo Trench - Twenty One Pilots">
         <p>Trench - Twenty One Pilots</p>
         <span class="price">$23.990</span>
         <br>
@@ -81,7 +96,6 @@
         <br>
         <button type="button">Añadir al carrito</button>
       </article>
-    </section>
 
     <article class="product-item">
       <img src="assets/img/vinilo_ag.png" alt="Vinilo Eternal Sunshine - Ariana Grande">
@@ -132,6 +146,9 @@
       <span class="price">$24.990</span>
       <br>
       <button type="button">Añadir al carrito</button>
+    </article>
+      </div>
+    </section>
   </main>
 
   <footer>
