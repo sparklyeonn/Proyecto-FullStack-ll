@@ -24,7 +24,7 @@ h2, h3 {
     font-family: 'Fascinate', cursive;
 }
 
-p, span, button {
+p, span, button, label, input, textarea {
     font-family: 'Red Hat Display', sans-serif;
 }
 
