@@ -1,10 +1,10 @@
 /* Paleta de colores. La elegimos desde paletadecolores.com.mx */
 :root {
-    --color-principal: #444444; /* Color de titulos, subtitulos, lineas y bordes de tarjetas. */
-    --color-secundario: #8c0005; /* Color de menú superior y letras de cada tarjeta */
-    --color-acentos: #b52c00; /* Color solo titulo, botones y lineas de tarjetas */
-    --color-texto: #fcf7d1; /* Color de relleno de header, footer y tarjetas */
-    --color-fondo: #a9a17a; /* Color de fondo */
+    --color-principal: #080708; /* Color de titulos, subtitulos, lineas y bordes de tarjetas. */
+    --color-secundario: #080708; /* Color de menú superior y letras de cada tarjeta */
+    --color-acentos: #DF2935; /* Color solo titulo, botones y lineas de tarjetas */
+    --color-texto: #FDCA40; /* Color de relleno de header, footer y tarjetas */
+    --color-fondo: #E6E8E6; /* Color de fondo */
 }
 
 /* Estilo general de la pag */
