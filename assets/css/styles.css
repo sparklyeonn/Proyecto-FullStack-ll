@@ -196,6 +196,31 @@ button:hover {
     background-color: var(--color-secundario);
 }
 
+/*Estilo detalle del producto*/
+.product-detail {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  flex-wrap: wrap;
+  text-align: left;
+  padding: 20px 0;
+  background-color: transparent; /* sin fondo */
+  border: none; /* sin borde */
+}
+
+.product-container {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+
 /* Estilo del Footer */
 footer {
     background-color: var(--color-texto);
