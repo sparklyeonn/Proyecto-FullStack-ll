@@ -22,8 +22,29 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fascinate&family=Fascinate+Inline&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <script>
+        function validateLoginForm() {
+                    const username = document.getElementById("username").value.trim();
+                    const password = document.getElementById("password").value.trim();
 
+                    if (username === "") {
+                        alert("Por favor ingresa tu usuario.");
+                        return false; 
+                    }
+
+                    if (password === "") {
+                        alert("Por favor ingresa tu contraseña.");
+                        return false;
+                    }
+
+                    // si pasa la validación
+                    alert("Inicio de sesión exitoso.");
+                    window.location.href = "perfil.html"; // envia al perfil
+                    return false; // evita recarga de la página
+                }
+    </script>
 </head>
+
 <body>
     <header>
         <div class="logo">
@@ -42,20 +63,21 @@
             </nav>
         </header>
     </header>
-    <section class="login-section">
-        <div class="login-container">
+    <section class="contact-section">
             <h2>Iniciar Sesión</h2>
-            <form action="#" method="post">
-                <label for="username">Usuario:</label>
-                <input type="text" id="username" name="username" required>
-
-                <label for="password">Contraseña:</label>
-                <input type="password" id="password" name="password" required>
+            <form class="form-group" onsubmit="return validateLoginForm()">
+                <div class="form-group"></div>
+                    <label for="username">Usuario:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
 
                 <button type="submit">Ingresar</button>
             </form>
             <p>¿No tienes una cuenta? <a href="crear-cuenta.html">Regístrate aquí</a></p>
-        </div>
     </section>
     <footer>
       <p>&copy; 2025 Ritmo Lab. Todos los derechos reservados.</p>
