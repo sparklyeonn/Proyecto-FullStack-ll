@@ -196,7 +196,7 @@ button:hover {
     background-color: var(--color-secundario);
 }
 
-/*Estilo detalle del producto*/
+/* Estilo detalle del producto */
 .product-detail {
   display: flex;
   justify-content: center;
@@ -220,6 +220,11 @@ button:hover {
   padding: 0;
 }
 
+/* Logo */
+.logo-header {
+  width: 200px; 
+  height: auto;
+}
 
 /* Estilo del Footer */
 footer {
