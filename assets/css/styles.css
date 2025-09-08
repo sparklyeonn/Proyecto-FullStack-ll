@@ -226,6 +226,41 @@ button:hover {
   height: auto;
 }
 
+/*estilo para perfil de usuario*/
+
+.profile-section,
+.orders-section {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--color-texto);
+    border: 2px solid var(--color-principal);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.profile-section h3,
+.orders-section h3 {
+    color: var(--color-acentos);
+    margin-bottom: 15px;
+}
+
+.orders-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.orders-section li {
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: var(--color-fondo);
+    border: 1px solid var(--color-principal);
+    border-radius: 6px;
+}
+
+
+
 /* Estilo del Footer */
 footer {
     background-color: var(--color-texto);
