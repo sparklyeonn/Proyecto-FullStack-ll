@@ -10,6 +10,7 @@ import Contacto from './pages/Contacto';
 import Accesorios from './pages/Accesorios';  
 import Vinilos from './pages/Vinilos';
 import Login from './pages/Login';
+import Perfil from './pages/Perfil';
 
 function Layout() {
   return (
@@ -41,6 +42,8 @@ function App() {
           <Route path="vinilos" element={<Vinilos />} />
 
           <Route path="login" element={<Login />} />
+
+          <Route path="perfil" element={<Perfil />} />
           
         </Route>
       </Routes>
