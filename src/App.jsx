@@ -8,6 +8,7 @@ import Inicio from './pages/Inicio';
 import Cds from './pages/Cds';
 import Contacto from './pages/Contacto';
 import Accesorios from './pages/Accesorios';  
+import Vinilos from './pages/Vinilos';
 
 function Layout() {
   return (
@@ -35,6 +36,8 @@ function App() {
           <Route path="contacto" element={<Contacto />} />
           
           <Route path="accesorios" element={<Accesorios />} />
+
+          <Route path="vinilos" element={<Vinilos />} />
           
         </Route>
       </Routes>
