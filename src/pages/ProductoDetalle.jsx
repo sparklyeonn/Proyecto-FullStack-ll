@@ -1,25 +1,36 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { productos } from '../data/productos.js';
 
-function ProductItem({ id, titulo, artista, tipo, precio, imagenUrl, imagenAlt }) {
-    
+function DetalleProducto() {
+    const { id } = useParams();
+    const producto = productos.find(p => p.id === id);
+
+    if (!producto) {
+        return (
+            <main>
+                <h2>Producto no encontrado</h2>
+            </main>
+        );
+    }
+
     return (
- 
-        <Link to={`/producto/${id}`} className="product-item-link">
-            <article className="product-item">
-                
-
-                <img src={imagenUrl} alt={imagenAlt} className="product-image" />
-                
-                <div className="product-info-item">
-                    <h3>{titulo}</h3>
-                    <p>{artista}</p>
-                    <p className="product-price">${precio}</p>
-                    <button type="button" className="product-button">Añadir al carrito</button>
+        // FÍJATE: Sin <header> ni <footer>
+        <main>
+            <section className="product-detail">
+                <div className="product-container">
+                    <img src={producto.imagenUrl} alt={producto.imagenAlt} />
+                    <div className="product-info">
+                        <h1>{producto.titulo} - {producto.artista}</h1>
+                        <p><strong>Formato:</strong> {producto.categoria}</p>
+                        <p><strong>Precio:</strong> ${producto.precio}</p>
+                        <p><strong>Descripción:</strong> {producto.descripcion}</p>
+                        <button type="button">Añadir al carrito</button>
+                    </div>
                 </div>
-            </article>
-        </Link>
+            </section>
+        </main>
     );
 }
 
-export default ProductItem;
+export default DetalleProducto;

@@ -11,6 +11,7 @@ import Accesorios from './pages/Accesorios';
 import Vinilos from './pages/Vinilos';
 import Login from './pages/Login';
 import Perfil from './pages/Perfil';
+import ProductoDetalle from './pages/ProductoDetalle';
 
 function Layout() {
   return (
@@ -46,6 +47,7 @@ function App() {
           <Route path="perfil" element={<Perfil />} />
 
           <Route path="producto/:id" element={<ProductoDetalle />} />
+          
         </Route>
       </Routes>
     </BrowserRouter>
