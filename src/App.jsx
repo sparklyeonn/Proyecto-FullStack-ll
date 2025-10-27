@@ -12,6 +12,8 @@ import Vinilos from './pages/Vinilos';
 import Login from './pages/Login';
 import Perfil from './pages/Perfil';
 import ProductoDetalle from './pages/ProductoDetalle';
+import Registro from './pages/Registro';
+import Carrito from './pages/Carrito';
 
 function Layout() {
   return (
@@ -47,6 +49,10 @@ function App() {
           <Route path="perfil" element={<Perfil />} />
 
           <Route path="producto/:id" element={<ProductoDetalle />} />
+
+          <Route path="registro" element={<Registro />} />
+
+          <Route path="carrito" element={<Carrito />} />
           
         </Route>
       </Routes>
