@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import Inicio from './pages/Inicio';
 import Cds from './pages/Cds';
 import Contacto from './pages/Contacto';
+import Accesorios from './pages/Accesorios';  
 
 function Layout() {
   return (
@@ -32,6 +33,8 @@ function App() {
           <Route path="cds" element={<Cds />} />
 
           <Route path="contacto" element={<Contacto />} />
+          
+          <Route path="accesorios" element={<Accesorios />} />
           
         </Route>
       </Routes>
