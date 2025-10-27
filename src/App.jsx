@@ -44,7 +44,8 @@ function App() {
           <Route path="login" element={<Login />} />
 
           <Route path="perfil" element={<Perfil />} />
-          
+
+          <Route path="producto/:id" element={<ProductoDetalle />} />
         </Route>
       </Routes>
     </BrowserRouter>

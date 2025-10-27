@@ -1,16 +1,23 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-function ProductItem({ imagenUrl, imagenAlt, titulo, artista, tipo, precio }) {
+function ProductItem({ id, titulo, artista, tipo, precio, imagenUrl, imagenAlt }) {
+    
     return (
-        <article className="product-item">
-            <h3>{titulo}</h3>
-            <img src={imagenUrl} alt={imagenAlt} />
-            <p>{artista}</p>
-            <p>{tipo}</p>
-            <span className="price">${precio}</span>
-            <br />
-            <button>Añadir al carrito</button>
-        </article>
+    
+        <Link to={`/producto/${id}`} className="product-item-link">
+            <article className="product-item">
+                
+                <img src={imagenUrl} alt={imagenAlt} className="product-image" />
+                
+                <div className="product-info-item">
+                    <h3>{titulo}</h3>
+                    <p>{artista}</p>
+                    <p className="product-price">${precio}</p>
+                    <button type="button" className="product-button">Añadir al carrito</button>
+                </div>
+            </article>
+        </Link>
     );
 }
 
