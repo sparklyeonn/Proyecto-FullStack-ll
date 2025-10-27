@@ -9,6 +9,7 @@ import Cds from './pages/Cds';
 import Contacto from './pages/Contacto';
 import Accesorios from './pages/Accesorios';  
 import Vinilos from './pages/Vinilos';
+import Login from './pages/Login';
 
 function Layout() {
   return (
@@ -17,7 +18,7 @@ function Layout() {
       
       <Outlet />  
       
-      <Footer />  
+      <Footer />    
     </>
   );
 }
@@ -38,6 +39,8 @@ function App() {
           <Route path="accesorios" element={<Accesorios />} />
 
           <Route path="vinilos" element={<Vinilos />} />
+
+          <Route path="login" element={<Login />} />
           
         </Route>
       </Routes>
@@ -45,4 +48,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 
