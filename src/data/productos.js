@@ -1,4 +1,3 @@
-
 export const productos = [
 
     // cds
@@ -9,7 +8,8 @@ export const productos = [
         categoria: 'cd',
         precio: '11.990',
         imagenUrl: '/assets/img/cd-gorillaz.jpg',
-        imagenAlt: 'CD Gorillaz'
+        imagenAlt: 'CD Gorillaz',
+        descripcion: 'El álbum debut homónimo de la banda virtual Gorillaz, un éxito mundial.'
     },
     {
         id: 'cd-toxicity',
@@ -18,7 +18,8 @@ export const productos = [
         categoria: 'cd',
         precio: '14.990',
         imagenUrl: '/assets/img/cd-toxicity.jpg',
-        imagenAlt: 'CD Toxicity'
+        imagenAlt: 'CD Toxicity',
+        descripcion: 'El aclamado segundo álbum de System of a Down, conocido por sus potentes letras y mezcla de géneros.'
     },
     {
         id: 'cd-nevermind',
@@ -27,7 +28,8 @@ export const productos = [
         categoria: 'cd',
         precio: '14.990',
         imagenUrl: '/assets/img/cd-nevermind.jpg',
-        imagenAlt: 'CD Nevermind'
+        imagenAlt: 'CD Nevermind',
+        descripcion: 'El icónico álbum de Nirvana que definió el movimiento grunge en los años 90.'
     },
     {
         id: 'cd-blurryface',
@@ -36,7 +38,8 @@ export const productos = [
         categoria: 'cd',
         precio: '13.990',
         imagenUrl: '/assets/img/album-blurryface.jpeg',
-        imagenAlt: 'CD Blurryface'
+        imagenAlt: 'CD Blurryface',
+        descripcion: 'Cuarto álbum de Twenty One Pilots, explorando temas de inseguridad a través del personaje "Blurryface".'
     },
     {
         id: 'cd-positions',
@@ -45,7 +48,8 @@ export const productos = [
         categoria: 'cd',
         precio: '11.990',
         imagenUrl: '/assets/img/album-positions.jpeg',
-        imagenAlt: 'CD Positions'
+        imagenAlt: 'CD Positions',
+        descripcion: 'El sexto álbum de estudio de Ariana Grande, con un sonido R&B y letras sobre el amor y la intimidad.'
     },
     {
         id: 'cd-pure-heroine',
@@ -54,7 +58,8 @@ export const productos = [
         categoria: 'cd',
         precio: '12.990',
         imagenUrl: '/assets/img/album-pureheroine.png',
-        imagenAlt: 'CD PureHeroine'
+        imagenAlt: 'CD PureHeroine',
+        descripcion: 'El álbum debut de Lorde que la catapultó a la fama, con éxitos como "Royals".'
     },
     {
         id: 'cd-supernova',
@@ -63,7 +68,8 @@ export const productos = [
         categoria: 'cd',
         precio: '10.990',
         imagenUrl: '/assets/img/album-supernova.jpeg',
-        imagenAlt: 'CD Supernova'
+        imagenAlt: 'CD Supernova',
+        descripcion: 'Álbum debut del popular grupo pop chileno Supernova.'
     },
     {
         id: 'cd-american-idiot',
@@ -72,7 +78,8 @@ export const productos = [
         categoria: 'cd',
         precio: '16.990',
         imagenUrl: '/assets/img/album-americanidiot.png',
-        imagenAlt: 'CD AmericanIdiot'
+        imagenAlt: 'CD AmericanIdiot',
+        descripcion: 'La ópera rock de Green Day que definió una generación y criticó la política de la época.'
     },
 
     // vinilos
@@ -83,7 +90,8 @@ export const productos = [
         categoria: 'vinilo',
         precio: '23.990',
         imagenUrl: '/assets/img/album-vessel.jpeg',
-        imagenAlt: 'Vinilo Vessel - Twenty One Pilots'
+        imagenAlt: 'Vinilo Vessel - Twenty One Pilots',
+        descripcion: 'El tercer álbum de Twenty One Pilots, con un sonido que mezcla rock alternativo, rap y pop. Una pieza esencial para los fans de la banda.'
     },
     {
         id: 'vinilo-blurryface',
@@ -92,7 +100,8 @@ export const productos = [
         categoria: 'vinilo',
         precio: '21.990',
         imagenUrl: '/assets/img/album-blurryface.jpeg',
-        imagenAlt: 'Vinilo Blurryface - Twenty One Pilots'
+        imagenAlt: 'Vinilo Blurryface - Twenty One Pilots',
+        descripcion: 'Edición en vinilo del cuarto álbum de Twenty One Pilots, explorando temas de inseguridad.'
     },
     {
         id: 'vinilo-trench',
@@ -101,7 +110,8 @@ export const productos = [
         categoria: 'vinilo',
         precio: '23.990',
         imagenUrl: '/assets/img/album-trench.webp',
-        imagenAlt: 'Vinilo Trench - Twenty One Pilots'
+        imagenAlt: 'Vinilo Trench - Twenty One Pilots',
+        descripcion: 'Álbum conceptual que expande el universo de la banda, ahora en formato vinilo.'
     },
     {
         id: 'vinilo-scaled-and-icy',
@@ -110,7 +120,8 @@ export const productos = [
         categoria: 'vinilo',
         precio: '21.990',
         imagenUrl: '/assets/img/album-scaledandicy.jpeg',
-        imagenAlt: 'Vinilo Scaled and Icy - Twenty One Pilots'
+        imagenAlt: 'Vinilo Scaled and Icy - Twenty One Pilots',
+        descripcion: 'El álbum más reciente de la banda, con un sonido más optimista y colores vibrantes, disponible en vinilo.'
     },
     {
         id: 'vinilo-clancy',
@@ -119,7 +130,8 @@ export const productos = [
         categoria: 'vinilo',
         precio: '22.990',
         imagenUrl: '/assets/img/album-clancy.jpg',
-        imagenAlt: 'Vinilo Clancy - Twenty One Pilots'
+        imagenAlt: 'Vinilo Clancy - Twenty One Pilots',
+        descripcion: 'La conclusión de la saga de Blurryface y Trench, "Clancy" es una pieza clave en la discografía de la banda.'
     },
     {
         id: 'vinilo-breach',
@@ -128,7 +140,8 @@ export const productos = [
         categoria: 'vinilo',
         precio: '21.990',
         imagenUrl: '/assets/img/vinilo_top.webp',
-        imagenAlt: 'Vinilo Breach - Twenty One Pilots'
+        imagenAlt: 'Vinilo Breach - Twenty One Pilots',
+        descripcion: 'Edición especial en vinilo "Breach" de Twenty One Pilots, un ítem de colección.'
     },
     {
         id: 'vinilo-eternal-sunshine',
@@ -137,7 +150,8 @@ export const productos = [
         categoria: 'vinilo',
         precio: '22.990',
         imagenUrl: '/assets/img/vinilo_ag.png',
-        imagenAlt: 'Vinilo Eternal Sunshine - Ariana Grande'
+        imagenAlt: 'Vinilo Eternal Sunshine - Ariana Grande',
+        descripcion: 'El esperado séptimo álbum de Ariana Grande, aclamado por la crítica, en una hermosa edición de vinilo.'
     },
     {
         id: 'vinilo-dangerous-woman',
@@ -146,7 +160,8 @@ export const productos = [
         categoria: 'vinilo',
         precio: '22.990',
         imagenUrl: '/assets/img/album-dangerouswoman.jpg',
-        imagenAlt: 'Vinilo Dangerous Woman - Ariana Grande'
+        imagenAlt: 'Vinilo Dangerous Woman - Ariana Grande',
+        descripcion: 'El álbum que marcó la transición de Ariana Grande a un sonido más maduro, ahora en vinilo.'
     },
     {
         id: 'vinilo-thank-u-next',
@@ -155,7 +170,8 @@ export const productos = [
         categoria: 'vinilo',
         precio: '21.990',
         imagenUrl: '/assets/img/album-thankunext.jpg',
-        imagenAlt: 'Vinilo Thank U, Next - Ariana Grande'
+        imagenAlt: 'Vinilo Thank U, Next - Ariana Grande',
+        descripcion: 'El icónico álbum de ruptura y auto-descubrimiento, "Thank U, Next", en formato vinilo.'
     },
     {
         id: 'vinilo-positions',
@@ -164,7 +180,8 @@ export const productos = [
         categoria: 'vinilo',
         precio: '23.990',
         imagenUrl: '/assets/img/album-positions.jpeg',
-        imagenAlt: 'Vinilo Positions - Ariana Grande'
+        imagenAlt: 'Vinilo Positions - Ariana Grande',
+        descripcion: 'Edición en vinilo del sexto álbum de estudio de Ariana Grande.'
     },
     {
         id: 'vinilo-yours-truly',
@@ -173,7 +190,8 @@ export const productos = [
         categoria: 'vinilo',
         precio: '24.990',
         imagenUrl: '/assets/img/album-yourstruly.jpg',
-        imagenAlt: 'Vinilo Yours Truly (10th Anniversary Edition) - Ariana Grande'
+        imagenAlt: 'Vinilo Yours Truly (10th Anniversary Edition) - Ariana Grande',
+        descripcion: 'Celebra el décimo aniversario del álbum debut de Ariana Grande con esta edición especial en vinilo.'
     },
     {
         id: 'vinilo-sweetener',
@@ -182,7 +200,8 @@ export const productos = [
         categoria: 'vinilo',
         precio: '22.990',
         imagenUrl: '/assets/img/album-sweetener.jpg',
-        imagenAlt: 'Vinilo Sweetener - Ariana Grande'
+        imagenAlt: 'Vinilo Sweetener - Ariana Grande',
+        descripcion: 'El álbum ganador del Grammy "Sweetener" en una hermosa edición de vinilo.'
     },
     {
         id: 'vinilo-my-everything',
@@ -191,7 +210,8 @@ export const productos = [
         categoria: 'vinilo',
         precio: '24.990',
         imagenUrl: '/assets/img/album-myeverything.jpg',
-        imagenAlt: 'Vinilo My Everything (10th Anniversary Edition) - Ariana Grande'
+        imagenAlt: 'Vinilo My Everything (10th Anniversary Edition) - Ariana Grande',
+        descripcion: 'Edición especial de aniversario del segundo álbum de Ariana Grande, "My Everything".'
     },
 
     // accesorios
@@ -202,7 +222,8 @@ export const productos = [
         categoria: 'accesorio',
         precio: '10.990',
         imagenUrl: '/assets/img/accesorio-llavero-gorillaz.webp',
-        imagenAlt: 'Llavero Gorillaz'
+        imagenAlt: 'Llavero Gorillaz',
+        descripcion: 'Lleva a tu banda virtual favorita a todas partes con este llavero oficial de Gorillaz.'
     },
     {
         id: 'acc-totebag-gorillaz',
@@ -211,7 +232,8 @@ export const productos = [
         categoria: 'accesorio',
         precio: '15.990',
         imagenUrl: '/assets/img/accesorio-totebag-gorillaz.webp',
-        imagenAlt: 'Totebag Gorillaz'
+        imagenAlt: 'Totebag Gorillaz',
+        descripcion: 'Totebag de alta calidad con un diseño icónico de la banda Gorillaz.'
     },
     {
         id: 'acc-mochila-gorillaz',
@@ -220,7 +242,8 @@ export const productos = [
         categoria: 'accesorio',
         precio: '26.990',
         imagenUrl: '/assets/img/accesorio-mochila-gorillaz.webp',
-        imagenAlt: 'Mochila Gorillaz'
+        imagenAlt: 'Mochila Gorillaz',
+        descripcion: 'Mochila resistente y espaciosa, perfecta para fans de Gorillaz.'
     },
     {
         id: 'acc-totebag-ariana',
@@ -229,7 +252,8 @@ export const productos = [
         categoria: 'accesorio',
         precio: '14.990',
         imagenUrl: '/assets/img/accesorio-totebag-ariana.PNG',
-        imagenAlt: 'Totebag Ariana Grande'
+        imagenAlt: 'Totebag Ariana Grande',
+        descripcion: 'Un totebag elegante para llevar tus cosas, con un diseño inspirado en Ariana Grande.'
     },
     {
         id: 'acc-jockey-ariana',
@@ -238,7 +262,8 @@ export const productos = [
         categoria: 'accesorio',
         precio: '12.990',
         imagenUrl: '/assets/img/accesorio-jockey-ariana.webp',
-        imagenAlt: 'Jockey Ariana Grande'
+        imagenAlt: 'Jockey Ariana Grande',
+        descripcion: 'Jockey oficial de Ariana Grande, perfecto para completar tu look.'
     },
     {
         id: 'acc-jockey-sabrina',
@@ -247,7 +272,8 @@ export const productos = [
         categoria: 'accesorio',
         precio: '12.990',
         imagenUrl: '/assets/img/accesorio-jockey-sabrina.webp',
-        imagenAlt: 'Jockey Sabrina Carpenter'
+        imagenAlt: 'Jockey Sabrina Carpenter',
+        descripcion: 'Demuestra tu apoyo a Sabrina Carpenter con este jockey de diseño exclusivo.'
     },
     {
         id: 'acc-botella-charlie',
@@ -256,7 +282,8 @@ export const productos = [
         categoria: 'accesorio',
         precio: '22.990',
         imagenUrl: '/assets/img/accesorio-botella-charliexcx.webp',
-        imagenAlt: 'Botella Charlie XCX'
+        imagenAlt: 'Botella Charlie XCX',
+        descripcion: 'Mantente hidratado con esta botella reutilizable oficial de Charlie XCX.'
     },
     {
         id: 'acc-llavero-charlie',
@@ -265,7 +292,8 @@ export const productos = [
         categoria: 'accesorio',
         precio: '10.990',
         imagenUrl: '/assets/img/accesorio-llavero-charliexcx.webp',
-        imagenAlt: 'Llavero Charlie XCX'
+        imagenAlt: 'Llavero Charlie XCX',
+        descripcion: 'Un llavero único para los fans de la era "Brat" de Charlie XCX.'
     },
     {
         id: 'acc-totebag-greenday',
@@ -274,7 +302,8 @@ export const productos = [
         categoria: 'accesorio',
         precio: '15.990',
         imagenUrl: '/assets/img/accesorio-totebag-greenday.webp',
-        imagenAlt: 'Totebag Green Day'
+        imagenAlt: 'Totebag Green Day',
+        descripcion: 'Totebag con el icónico logo de Green Day, ideal para el día a día.'
     },
     {
         id: 'acc-pin-greenday',
@@ -283,7 +312,8 @@ export const productos = [
         categoria: 'accesorio',
         precio: '8.990',
         imagenUrl: '/assets/img/accesorio-pin-greenday.webp',
-        imagenAlt: 'Pin Green Day'
+        imagenAlt: 'Pin Green Day',
+        descripcion: 'Set de pines coleccionables de Green Day para tu chaqueta o mochila.'
     },
     {
         id: 'acc-botella-katy',
@@ -292,7 +322,8 @@ export const productos = [
         categoria: 'accesorio',
         precio: '22.990',
         imagenUrl: '/assets/img/accesorio-botella-katyperry.webp',
-        imagenAlt: 'Botella Katy Perry'
+        imagenAlt: 'Botella Katy Perry',
+        descripcion: 'Botella de agua reutilizable con un diseño colorido, al estilo de Katy Perry.'
     },
     {
         id: 'acc-llavero-katy',
@@ -301,6 +332,7 @@ export const productos = [
         categoria: 'accesorio',
         precio: '10.990',
         imagenUrl: '/assets/img/accesorio-llavero-katyperry.webp',
-        imagenAlt: 'Llavero Katy Perry'
+        imagenAlt: 'Llavero Katy Perry',
+        descripcion: 'Llavero oficial de Katy Perry, un accesorio divertido y coleccionable.'
     }
 ];
