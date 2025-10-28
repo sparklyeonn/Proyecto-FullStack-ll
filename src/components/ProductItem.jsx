@@ -1,21 +1,44 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { useApp } from '../context/AppContext.jsx';
 
-function ProductItem({ imagenUrl, imagenAlt, titulo, artista, tipo, precio }) {
+function ProductItem({ producto }) {
+
+    const { handleAddToCart } = useApp();
+
+    const onAddToCart = () => {
+        handleAddToCart(producto);
+    };
+
     return (
         <Card className="product-item">
-            <Card.Img variant="top" src={imagenUrl} alt={imagenAlt} />
-            <Card.Body className="text-center d-flex flex-column"> 
+            <Link to={`/producto/${producto.id}`}>
+                <Card.Img
+                    variant="top"
+                    src={producto.imagenUrl}
+                    alt={producto.imagenAlt}
+                />
+            </Link>
 
-                <Card.Title as="h3">{titulo}</Card.Title>
-                {artista && <p className="mb-1">{artista}</p>}
-                {tipo && <p className="mb-2">{tipo}</p>}    
+            <Card.Body className="text-center d-flex flex-column">
+
+                <Card.Title as="h3">
+                    <Link to={`/producto/${producto.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                        {producto.titulo}
+                    </Link>
+                </Card.Title>
+
+                {producto.artista && <p className="mb-1">{producto.artista}</p>}
+                {producto.tipo && <p className="mb-2">{producto.tipo}</p>}
 
                 <div className="mt-auto">
-                    <span className="price">${precio}</span>
+                    <span className="price">${producto.precio.toLocaleString('es-CL')}</span>
                     <br />
-                    <Button className="btn-ritmo">Añadir al carrito</Button> 
+                    <Button className="btn-ritmo" onClick={onAddToCart}>
+                        Añadir al carrito
+                    </Button>
                 </div>
             </Card.Body>
         </Card>

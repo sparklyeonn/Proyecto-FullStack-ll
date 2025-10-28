@@ -1,6 +1,18 @@
 export const productos = [
 
     // cds
+
+    {
+        id: 'cd-dtmf', 
+        titulo: 'DeBÍ TiRAR MáS FOToS (2025)',
+        artista: 'Bad Bunny',
+        categoria: 'cd',
+        precio: '16.990',
+        imagenUrl: '/assets/img/cd-dtmf.jpeg',
+        imagenAlt: 'Portada de DTMF',
+        descripcion: 'El álbum más reciente de Bad Bunny, edición física en CD.'
+    },
+
     {
         id: 'cd-gorillaz',
         titulo: 'Gorillaz',
