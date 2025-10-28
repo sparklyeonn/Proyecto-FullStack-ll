@@ -1,19 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Fascinate&family=Fascinate+Inline&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap');
 
+/* General */
 :root {
     --color-principal: #B22222;
-    /* Color de titulos, subtitulos, lineas y bordes de tarjetas. */
     --color-secundario: #2C2C2C;
-    /* Color del menu superior y letras de cada tarjeta */
     --color-acentos: #E76F51;
-    /* Color solo titulo, botones y lineas de tarjetas */
     --color-texto: #F4E1D2;
-    /* Color de relleno de header, footer y tarjetas */
     --color-fondo: #F1F5F2;
-    /* Color de fondo */
 }
 
-/* Estilo general de la pag */
 body {
     background-color: var(--color-fondo);
     color: var(--color-principal);
@@ -21,7 +16,7 @@ body {
     padding: 0;
 }
 
-/* Fontss */
+/* Tipografías */
 h1 {
     font-family: 'Fascinate Inline', cursive;
 }
@@ -37,61 +32,31 @@ button,
 label,
 input,
 textarea,
-li {
+li,
+a {
     font-family: 'Red Hat Display', sans-serif;
 }
 
-/* Body */
-header {
-    background-color: var(--color-texto);
-    padding: 20px;
-    text-align: center;
-}
-
-header h1 {
-    color: var(--color-principal);
-    margin: 0;
-    font-size: 3em;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-}
-
-nav ul li {
-    display: inline;
-    margin: 0 15px;
-}
-
-nav a {
-    text-decoration: none;
-    color: var(--color-secundario);
-    font-weight: bold;
-    font-size: 1.2em;
-    font-family: 'Red Hat Display', sans-serif;
-}
-
-nav a:hover {
-    color: var(--color-principal);
-}
-
+/* Layout Principal */
 main {
     padding: 20px;
-    text-align: center;
+    min-height: calc(100vh - 160px);
 }
 
+/* Secciones comunes */
 .welcome h2,
 .featured-products h2 {
     color: var(--color-acentos);
     font-size: 2.5em;
     margin-top: 40px;
+    text-align: center;
 }
 
 .featured-products {
     margin-top: 50px;
 }
 
+/* Productos */
 .product-grid {
     display: flex;
     justify-content: center;
@@ -99,53 +64,99 @@ main {
     flex-wrap: wrap;
 }
 
+/* Tarjeta de Producto (ProductItem - con Bootstrap Card) */
 .product-item {
     background-color: var(--color-texto);
-    border: 2px solid var(--color-acentos);
-    padding: 20px;
-    border-radius: 10px;
+    border: 1px solid #ddd;
+    border-radius: .375rem;
     width: 250px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.product-item .card-img-top {
+    max-width: 100%;
+    height: 200px;
+    object-fit: contain;
+    border-radius: calc(.375rem - 1px) calc(.375rem - 1px) 0 0;
+    padding: 10px;
+    background-color: white;
+}
+
+.product-item .card-body {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     text-align: center;
 }
 
-.product-item img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 5px;
-}
-
-.product-item h3 {
+.product-item .card-title {
+    /* H3 dentro de Card */
     color: var(--color-principal);
-    margin: 10px 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    font-family: 'Fascinate', cursive;
+    line-height: 1.2;
+    min-height: 2.6rem;
 }
 
 .product-item p {
-    margin: 5px 0;
+    /* Texto dentro de Card (artista, tipo) */
+    margin-bottom: 0.25rem;
     color: var(--color-secundario);
+    font-size: 0.9rem;
 }
 
 .price {
     font-weight: bold;
     color: var(--color-secundario);
-    font-size: 1.4em;
-    margin: 10px 0;
+    font-size: 1.2em;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
 }
 
-button {
+/* Botones */
+button,
+.btn {
     background-color: var(--color-acentos);
-    color: white;
+    color: white !important;
     border: none;
-    padding: 10px 20px;
+    padding: 8px 16px;
     cursor: pointer;
     border-radius: 5px;
-    margin-top: 10px;
+    margin-top: auto;
+    font-family: 'Red Hat Display', sans-serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    transition: background-color 0.2s ease;
 }
 
-button:hover {
+button:hover,
+.btn:hover {
     background-color: var(--color-secundario);
+    color: white !important;
 }
 
-/* Contacto */
+.btn-ritmo {
+    background-color: var(--color-acentos) !important;
+}
+
+.btn-ritmo:hover {
+    background-color: var(--color-secundario) !important;
+}
+
+/* Sección Contacto */
 .contact-section {
     max-width: 600px;
     margin: 50px auto;
@@ -185,7 +196,7 @@ button:hover {
     border: 1px solid var(--color-principal);
     border-radius: 5px;
     background-color: var(--color-fondo);
-    color: var(--color-principal);
+    color: var(--color-secundario);
     font-family: 'Red Hat Display', sans-serif;
 }
 
@@ -196,21 +207,12 @@ button:hover {
 }
 
 .contact-form button {
-    background-color: var(--color-acentos);
-    color: white;
-    border: none;
     padding: 15px;
     font-size: 1.1em;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+    margin-top: 10px;
 }
 
-.contact-form button:hover {
-    background-color: var(--color-secundario);
-}
-
-/* detalle del producto */
+/* Detalle de Producto */
 .product-detail {
     display: flex;
     justify-content: center;
@@ -218,11 +220,7 @@ button:hover {
     gap: 40px;
     flex-wrap: wrap;
     text-align: left;
-    padding: 20px 0;
-    background-color: transparent;
-    /* sin fondo */
-    border: none;
-    /* sin borde */
+    padding: 40px 20px;
 }
 
 .product-container {
@@ -231,24 +229,53 @@ button:hover {
     gap: 40px;
     max-width: 900px;
     margin: 0 auto;
-    background-color: transparent;
-    border: none;
-    padding: 0;
+    background-color: var(--color-texto);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Logo */
-.logo-header {
-    width: 200px;
+/* Estilos para imagen e info en detalle producto */
+.product-container img {
+    max-width: 40%;
     height: auto;
+    border-radius: 5px;
 }
 
-/*estilo para perfil de usuario*/
+.product-info {
+    max-width: 55%;
+}
 
+.product-info h1 {
+    font-family: 'Fascinate', cursive;
+    /* Fuente Título */
+    color: var(--color-principal);
+    margin-bottom: 20px;
+}
+
+.product-info p {
+    color: var(--color-secundario);
+    margin-bottom: 10px;
+}
+
+.product-info button {
+    margin-top: 20px;
+}
+
+
+/* Logo (Navbar) */
+.logo-header {
+    width: auto;
+    height: 30px;
+    max-width: 150px;
+}
+
+/* Perfil de Usuario */
 .profile-section,
 .orders-section {
     max-width: 600px;
-    margin: 20px auto;
-    padding: 20px;
+    margin: 40px auto;
+    padding: 30px;
     background-color: var(--color-texto);
     border: 2px solid var(--color-principal);
     border-radius: 10px;
@@ -259,7 +286,13 @@ button:hover {
 .profile-section h3,
 .orders-section h3 {
     color: var(--color-acentos);
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    font-family: 'Fascinate', cursive;
+}
+
+.profile-section p {
+    color: var(--color-secundario);
+    margin-bottom: 10px;
 }
 
 .orders-section ul {
@@ -268,11 +301,12 @@ button:hover {
 }
 
 .orders-section li {
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
     background-color: var(--color-fondo);
     border: 1px solid var(--color-principal);
     border-radius: 6px;
+    color: var(--color-secundario);
 }
 
 /* Footer */
@@ -281,7 +315,36 @@ footer {
     color: var(--color-principal);
     text-align: center;
     padding: 20px;
-    position: relative;
-    bottom: 0;
+    margin-top: 60px;
     width: 100%;
+    border-top: 2px solid var(--color-principal);
+}
+
+/* Navbar Bootstrap Customization */
+.ritmo-lab-navbar {
+    background-color: var(--color-texto) !important;
+    border-bottom: 2px solid var(--color-principal);
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+}
+
+.ritmo-lab-navbar .nav-link {
+    color: var(--color-secundario) !important;
+    font-weight: bold;
+    margin: 0 0.5rem;
+    transition: color 0.2s ease;
+    font-size: 1.1em;
+}
+
+.ritmo-lab-navbar .nav-link.active,
+.ritmo-lab-navbar .nav-link:hover {
+    color: var(--color-principal) !important;
+}
+
+.ritmo-lab-navbar .navbar-toggler {
+    border-color: var(--color-secundario);
+}
+
+.ritmo-lab-navbar .navbar-toggler-icon {
+    /* background-image: url("data:image/svg+xml,..."); */
 }

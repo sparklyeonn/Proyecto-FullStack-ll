@@ -1,23 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
-function ProductItem({ id, titulo, artista, tipo, precio, imagenUrl, imagenAlt }) {
-    
+function ProductItem({ imagenUrl, imagenAlt, titulo, artista, tipo, precio }) {
     return (
-    
-        <Link to={`/producto/${id}`} className="product-item-link">
-            <article className="product-item">
-                
-                <img src={imagenUrl} alt={imagenAlt} className="product-image" />
-                
-                <div className="product-info-item">
-                    <h3>{titulo}</h3>
-                    <p>{artista}</p>
-                    <p className="product-price">${precio}</p>
-                    <button type="button" className="product-button">Añadir al carrito</button>
+        <Card className="product-item">
+            <Card.Img variant="top" src={imagenUrl} alt={imagenAlt} />
+            <Card.Body className="text-center d-flex flex-column"> 
+
+                <Card.Title as="h3">{titulo}</Card.Title>
+                {artista && <p className="mb-1">{artista}</p>}
+                {tipo && <p className="mb-2">{tipo}</p>}    
+
+                <div className="mt-auto">
+                    <span className="price">${precio}</span>
+                    <br />
+                    <Button className="btn-ritmo">Añadir al carrito</Button> 
                 </div>
-            </article>
-        </Link>
+            </Card.Body>
+        </Card>
     );
 }
 
