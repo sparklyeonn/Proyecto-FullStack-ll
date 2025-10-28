@@ -9,13 +9,13 @@ const carouselImage2 = "/assets/img/vinilo_ag.png";
 const carouselImage3 = "/assets/img/cd-gorillaz.jpg";
 
 function Inicio() {
-    
+
     const destacadosIds = [
-      'vinilo-breach',         
-      'vinilo-eternal-sunshine', 
-      'cd-dtmf',                
-      'acc-botella-charlie'     
-    ]; 
+        'vinilo-breach',
+        'vinilo-eternal-sunshine',
+        'cd-dtmf',
+        'acc-botella-charlie'
+    ];
     const productosDestacados = productos.filter(p => destacadosIds.includes(p.id));
 
     return (
@@ -77,7 +77,7 @@ function Inicio() {
                 <Container>
                     <h2 className="text-center">Productos Destacados</h2>
                     <div className="product-grid">
-                        
+
                         {productosDestacados.map(producto => (
                             <ProductItem
                                 key={producto.id}

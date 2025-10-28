@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const AppContext = createContext();
 
@@ -22,8 +22,23 @@ export const AppProvider = ({ children }) => {
         alert(`¡"${producto.titulo}" se añadió al carrito!`);
     };
 
+    const handleRemoveFromCart = (productoId) => {
+        setCart(cart.filter(item => item.id !== productoId));
+    };
+
+    const handleClearCart = () => {
+        setCart([]);
+    };
+
     // autenticacion 
     const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const usuarioGuardado = localStorage.getItem('usuarioLogueado');
+        if (usuarioGuardado) {
+            setUser(JSON.parse(usuarioGuardado));
+        }
+    }, []);
 
     // INICIO SESION
 
@@ -41,13 +56,14 @@ export const AppProvider = ({ children }) => {
     };
 
     //
-
     const value = {
         cart,
         user,
         handleAddToCart,
         handleLogin,
-        handleLogout
+        handleLogout,
+        handleRemoveFromCart,
+        handleClearCart
     };
 
     return (
@@ -58,5 +74,9 @@ export const AppProvider = ({ children }) => {
 };
 
 export const useApp = () => {
-    return useContext(AppContext);
+    const context = useContext(AppContext);
+    if (!context) {
+        throw new Error('useApp debe ser usado dentro de un AppProvider');
+    }
+    return context;
 };

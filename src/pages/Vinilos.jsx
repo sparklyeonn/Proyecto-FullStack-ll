@@ -1,36 +1,31 @@
 import React from 'react';
-import ProductItem from '../components/ProductItem'; 
-
+import ProductItem from '../components/ProductItem.jsx';
+import { Container } from 'react-bootstrap';
 import { productos } from '../data/productos.js';
 
 function Vinilos() {
-    const vinilos = productos.filter(producto => producto.categoria === 'vinilo');
+
+    const productosVinilos = productos.filter(p => p.categoria === 'vinilo');
 
     return (
         <main>
-            <section className="welcome">
-                <h2>Colección de Vinilos</h2>
-                <p>Explora nuestra exclusiva colección de vinilos y encuentra tus álbumes favoritos.</p>
-            </section>
+            <Container className="my-5">
+                <section className="welcome text-center">
+                    <h2 style={{ fontFamily: "'Fascinate', cursive" }}>Colección de Vinilos</h2>
+                    <p className="lead">Explora nuestra exclusiva colección de vinilos y encuentra tus álbumes favoritos.</p>
+                </section>
 
-            <section className="vinilos">
-                <div className="product-grid">
-
-                    {vinilos.map(producto => (
-                        <ProductItem
-                            key={producto.id}
-                            id={producto.id}
-                            titulo={producto.titulo}
-                            artista={producto.artista}
-                            tipo={producto.categoria}
-                            precio={producto.precio}
-                            imagenUrl={producto.imagenUrl}
-                            imagenAlt={producto.imagenAlt}
-                        />
-                    ))}
-
-                </div>
-            </section>
+                <section className="vinilos mt-5">
+                    <div className="product-grid">
+                        {productosVinilos.map(producto => (
+                            <ProductItem
+                                key={producto.id}
+                                producto={producto}
+                            />
+                        ))}
+                    </div>
+                </section>
+            </Container>
         </main>
     );
 }

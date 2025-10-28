@@ -4,17 +4,18 @@ import { Container, Row, Col, Button, ListGroup, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 function Carrito() {
-    
+
     const { cart, handleRemoveFromCart, handleClearCart } = useApp();
     const parsePrecio = (precioStr) => {
         if (typeof precioStr === 'number') return precioStr;
         return Number(String(precioStr).replace(/\./g, ''));
     };
 
-    // Total del carrito
+    // total del carrito
     const total = cart.reduce((acc, item) => {
+        // Multiplica el precio (limpio) por la cantidad
         return acc + (parsePrecio(item.precio) * item.cantidad);
-    }, 0);
+    }, 0); 
 
     return (
         <main>
@@ -25,6 +26,7 @@ function Carrito() {
 
                         {cart.length === 0 ? (
 
+                            // Si es que el carrito está vacío 
                             <div className="text-center p-5 bg-light rounded">
                                 <p className="lead">Tu carrito está vacío. Agrega productos para continuar.</p>
                                 <Button as={Link} to="/" variant="primary" className="btn-ritmo">
@@ -34,7 +36,7 @@ function Carrito() {
 
                         ) : (
 
-                            //  Si es que el carrito tiene productos 
+                            // Si es que el carrito tiene productos 
                             <div>
                                 <ListGroup variant="flush">
                                     {cart.map(item => (
