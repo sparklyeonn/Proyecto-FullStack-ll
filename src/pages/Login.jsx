@@ -71,7 +71,7 @@ function Login() {
             </form>
             
             <p>
-                ¿No tienes una cuenta? <Link to="/crear-cuenta">Regístrate aquí</Link>
+                ¿No tienes una cuenta? <Link to="/registro">Regístrate aquí</Link>
             </p>
         </section>
     );
