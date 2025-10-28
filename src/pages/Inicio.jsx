@@ -1,5 +1,10 @@
 import React from 'react';
 import ProductItem from '../components/ProductItem'; 
+import Carousel from 'react-bootstrap/Carousel';
+
+const carouselImage1 = "/assets/img/vinilo_top.webp";
+const carouselImage2 = "/assets/img/album-yourstruly.jpg";
+const carouselImage3 = "/assets/img/album-americanidiot.png";
 
 function Inicio() {
     return (
@@ -13,6 +18,45 @@ function Inicio() {
                     lo que buscas y te conectes con la música que amas.
                     Te invitamos a explorar nuestro catálogo y a sumergirte en el ritmo.
                 </p>
+            </section>
+
+            {/* Carrusel */}
+            <section className="carousel-section" style={{ maxWidth: '600px', margin: '40px auto' }}>
+                <Carousel>
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100"
+                            src={carouselImage1}
+                            alt="Primer slide"
+                        />
+                        <Carousel.Caption>
+                            <h3>¡Nuevos Lanzamientos!</h3>
+                            <p>Descubre lo último en vinilos y CDs.</p>
+                        </Carousel.Caption>
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100"
+                            src={carouselImage2}
+                            alt="Segundo slide"
+                        />
+                        <Carousel.Caption>
+                            <h3>Ofertas Especiales</h3>
+                            <p>Encuentra tus álbumes favoritos a precios increíbles.</p>
+                        </Carousel.Caption>
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <img
+                            className="d-block w-100"
+                            src={carouselImage3}
+                            alt="Tercer slide"
+                        />
+                        <Carousel.Caption>
+                            <h3>Clásicos que Perduran</h3>
+                            <p>La música que marcó generaciones, ahora en Ritmo Lab.</p>
+                        </Carousel.Caption>
+                    </Carousel.Item>
+                </Carousel>
             </section>
 
             <section className="featured-products">
@@ -78,3 +122,4 @@ function Inicio() {
 }
 
 export default Inicio;
+
