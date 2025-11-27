@@ -11,7 +11,10 @@ module.exports = function (config) {
 
         files: [
             'src/**/*.test.js',
-            'src/**/*.spec.js'
+            'src/**/*.spec.js',
+            'src/**/*.test.jsx',
+            'src/**/*.spec.jsx'
+
         ],
 
         exclude: [
@@ -20,7 +23,9 @@ module.exports = function (config) {
 
         preprocessors: {
             'src/**/*.test.js': ['webpack'],
-            'src/**/*.spec.js': ['webpack']
+            'src/**/*.spec.js': ['webpack'],
+            'src/**/*.test.jsx': ['webpack'],
+            'src/**/*.spec.jsx': ['webpack']
         },
 
         webpack: {
@@ -50,21 +55,13 @@ module.exports = function (config) {
         },
 
         reporters: ['progress'],
-
         port: 9876,
-
         colors: true,
-
         logLevel: config.LOG_INFO,
-
         autoWatch: true,
-
         browsers: ['Chrome'],
-
         singleRun: false,
-
         browserNoActivityTimeout: 60000,
-        
         concurrency: Infinity
     });
 };
