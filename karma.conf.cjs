@@ -1,35 +1,30 @@
 module.exports = function (config) {
     config.set({
-
-        frameworks: ['jasmine', 'webpack'],
+        frameworks: ['jasmine'],
 
         plugins: [
             require('karma-jasmine'),
             require('karma-webpack'),
             require('karma-chrome-launcher'),
+            require('karma-sourcemap-loader')
         ],
 
         files: [
-            'src/**/*.test.js',
-            'src/**/*.spec.js',
-            'src/**/*.test.jsx',
-            'src/**/*.spec.jsx'
-
+            'tests.webpack.js'
         ],
 
         exclude: [
-            'node_modules'
+            'src/setupTests.js'
         ],
 
         preprocessors: {
-            'src/**/*.test.js': ['webpack'],
-            'src/**/*.spec.js': ['webpack'],
-            'src/**/*.test.jsx': ['webpack'],
-            'src/**/*.spec.jsx': ['webpack']
+            'tests.webpack.js': ['webpack', 'sourcemap']
         },
 
         webpack: {
             mode: 'development',
+            target: 'web',
+            devtool: 'inline-source-map',
             module: {
                 rules: [
                     {
@@ -41,27 +36,21 @@ module.exports = function (config) {
                                 presets: ['@babel/preset-env', '@babel/preset-react']
                             }
                         }
-                    },
+                    }
                 ]
             },
             resolve: {
                 extensions: ['.js', '.jsx']
-            },
-            devtool: 'inline-source-map'
+            }
         },
 
-        webpackMiddleware: {
-            stats: 'errors-only'
+        client: {
+            clearContext: false
         },
 
-        reporters: ['progress'],
-        port: 9876,
-        colors: true,
-        logLevel: config.LOG_INFO,
-        autoWatch: true,
         browsers: ['Chrome'],
+        autoWatch: true,
         singleRun: false,
-        browserNoActivityTimeout: 60000,
-        concurrency: Infinity
+        browserNoActivityTimeout: 60000
     });
 };
