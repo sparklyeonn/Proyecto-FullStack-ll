@@ -14,9 +14,13 @@ import Perfil from './pages/Perfil';
 import ProductoDetalle from './pages/ProductoDetalle';
 import Registro from './pages/Registro';
 import Carrito from './pages/Carrito';
+
+// los import de admin
 import AdminLayout from './components/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminProductos from './pages/admin/AdminProductos';
+import AdminLogin from './pages/admin/AdminLogin';
+import AdminUsuarios from './pages/admin/AdminUsuarios';
 
 function Layout() {
   return (
