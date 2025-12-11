@@ -1,3 +1,9 @@
 // tests.webpack.js
-const testsContext = require.context('./src', true, /\.(test|spec)\.(js|jsx)$/);
-testsContext.keys().forEach(testsContext);
+// Cargar todas las pruebas
+const context = require.context('./src', true, /\.test\.(js|jsx)$/);
+context.keys().forEach(context);
+
+// Llamar a __karma__.start() SI está definido
+if (typeof __karma__ !== 'undefined') {
+    __karma__.start();
+}
