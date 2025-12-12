@@ -1,42 +1,41 @@
-import React, { useEffect, useMemo, useState } from "react";
-import ProductItem from "../components/ProductItem.jsx";
-import Carousel from "react-bootstrap/Carousel";
-import { Container, Row, Col, Alert, Spinner } from "react-bootstrap";
-import api from "../api/api"; 
+import React, { useEffect, useMemo, useState } from 'react';
+import ProductItem from '../components/ProductItem.jsx';
+import Carousel from 'react-bootstrap/Carousel';
+import { Container, Row, Col, Alert, Spinner } from 'react-bootstrap';
 
 const carouselImage1 = "/assets/img/vinilo_top.webp";
 const carouselImage2 = "/assets/img/vinilo_ag.png";
 const carouselImage3 = "/assets/img/cd-gorillaz.jpg";
 
+const API_URL = "http://18.206.208.70:8080"; //ip del backend
+
 function Inicio() {
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [error, setError] = useState("");
 
-  const destacadosIds = useMemo(
-    () => [
-      "vinilo-breach",
-      "vinilo-eternal-sunshine",
-      "cd-dtmf",
-      "acc-botella-charlie",
-    ],
-    []
-  );
+  const destacadosNombres = useMemo(() => ([
+    "vinilo-breach",
+    "vinilo-eternal-sunshine",
+    "cd-dtmf",
+    "acc-botella-charlie"
+  ]), []);
 
   useEffect(() => {
     const fetchProductos = async () => {
       try {
         setLoading(true);
-        setErrorMsg("");
+        setError("");
 
-        // ✅ Ajusta la ruta si tu backend usa otra (ej: /productos o /api/productos)
-        const res = await api.get("/productos");
-        setProductos(res.data || []);
-      } catch (err) {
-        console.error(err);
-        setErrorMsg(
-          "No se pudieron cargar los productos desde el backend. Revisa que el backend esté arriba y que CORS permita tu frontend."
-        );
+        const res = await fetch(`${API_URL}/api/productos`);
+        if (!res.ok) throw new Error(`Error HTTP ${res.status}`);
+
+        const data = await res.json();
+
+      
+        setProductos(Array.isArray(data) ? data : (data.content ?? []));
+      } catch (e) {
+        setError(e.message || "No se pudieron cargar productos");
       } finally {
         setLoading(false);
       }
@@ -46,20 +45,19 @@ function Inicio() {
   }, []);
 
   const productosDestacados = useMemo(() => {
-    return productos.filter((p) => destacadosIds.includes(p.id));
-  }, [productos, destacadosIds]);
+    const porNombre = productos.filter(p => destacadosNombres.includes(p.nombre));
+
+    if (porNombre.length > 0) return porNombre;
+    return productos.slice(0, 4);
+  }, [productos, destacadosNombres]);
 
   return (
     <main>
       <Container as="section" className="carousel-section mb-5 mt-4">
         <Carousel>
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={carouselImage1}
-              alt="Primer slide"
-              style={{ maxHeight: "500px", objectFit: "cover" }}
-            />
+            <img className="d-block w-100" src={carouselImage1} alt="Primer slide"
+              style={{ maxHeight: '500px', objectFit: 'cover' }} />
             <Carousel.Caption className="carousel-caption-custom bg-dark bg-opacity-50 p-3 rounded">
               <h3>¡Nuevos Lanzamientos!</h3>
               <p>Descubre lo último en vinilos y CDs.</p>
@@ -67,12 +65,8 @@ function Inicio() {
           </Carousel.Item>
 
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={carouselImage2}
-              alt="Segundo slide"
-              style={{ maxHeight: "500px", objectFit: "cover" }}
-            />
+            <img className="d-block w-100" src={carouselImage2} alt="Segundo slide"
+              style={{ maxHeight: '500px', objectFit: 'cover' }} />
             <Carousel.Caption className="carousel-caption-custom bg-dark bg-opacity-50 p-3 rounded">
               <h3>Ofertas Especiales</h3>
               <p>Encuentra tus álbumes favoritos a precios increíbles.</p>
@@ -80,12 +74,8 @@ function Inicio() {
           </Carousel.Item>
 
           <Carousel.Item>
-            <img
-              className="d-block w-100"
-              src={carouselImage3}
-              alt="Tercer slide"
-              style={{ maxHeight: "500px", objectFit: "cover" }}
-            />
+            <img className="d-block w-100" src={carouselImage3} alt="Tercer slide"
+              style={{ maxHeight: '500px', objectFit: 'cover' }} />
             <Carousel.Caption className="carousel-caption-custom bg-dark bg-opacity-50 p-3 rounded">
               <h3>Clásicos que Perduran</h3>
               <p>La música que marcó generaciones, ahora en Ritmo Lab.</p>
@@ -97,13 +87,10 @@ function Inicio() {
       <Container className="text-center mb-5">
         <Row>
           <Col>
-            <h2 style={{ fontFamily: "'Fascinate', cursive" }}>
-              Bienvenid@ a Ritmo Lab
-            </h2>
+            <h2 style={{ fontFamily: "'Fascinate', cursive" }}>Bienvenid@ a Ritmo Lab</h2>
             <p className="lead">
-              Tu espacio digital para sumergirte en CDs, vinilos y artículos de
-              colección. Explora nuestro catálogo y conecta con la música que
-              amas.
+              Tu espacio digital para sumergirte en CDs, vinilos y artículos de colección.
+              Explora nuestro catálogo y conecta con la música que amas.
             </p>
           </Col>
         </Row>
@@ -119,26 +106,19 @@ function Inicio() {
             </div>
           )}
 
-          {!loading && errorMsg && (
-            <Alert variant="danger" className="mt-3">
-              {errorMsg}
+          {error && <Alert variant="danger" className="mt-3">{error}</Alert>}
+
+          {!loading && !error && productosDestacados.length === 0 && (
+            <Alert variant="warning" className="mt-3">
+              No hay productos disponibles todavía.
             </Alert>
           )}
 
-          {!loading && !errorMsg && (
-            <div className="product-grid">
-              {productosDestacados.length === 0 ? (
-                <Alert variant="warning" className="mt-3">
-                  No hay productos destacados aún (o los IDs no coinciden con los
-                  del backend).
-                </Alert>
-              ) : (
-                productosDestacados.map((producto) => (
-                  <ProductItem key={producto.id} producto={producto} />
-                ))
-              )}
-            </div>
-          )}
+          <div className="product-grid">
+            {productosDestacados.map(producto => (
+              <ProductItem key={producto.id} producto={producto} />
+            ))}
+          </div>
         </Container>
       </section>
 
@@ -149,13 +129,13 @@ function Inicio() {
             <iframe
               width="560"
               height="315"
-              src="https://www.youtube.com/embed/V9PVRfjEBTI?si=pOhQ-VHKe09-EgJz"
+              src="https://www.youtube.com/embed/V9PVRfjEBTI"
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerPolicy="strict-origin-when-cross-origin"
               allowFullScreen
-            ></iframe>
+            />
           </div>
         </Container>
       </section>
