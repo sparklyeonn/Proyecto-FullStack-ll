@@ -28,12 +28,10 @@ function Registro() {
             setLoading(true);
 
             // 1️Registrar usuario (rol CLIENTE)
-            await registerRequest({
-                nombre,
-                email,
-                password,
-                rol: "CLIENTE" 
-            });
+        await registerRequest({ nombre,
+                                email, 
+                                password });
+
 
             // Login automatico
             const loginResp = await loginRequest(email, password);

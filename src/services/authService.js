@@ -1,118 +1,111 @@
-const API_URL = "http://18.206.208.70:8080"; 
+const API_URL = "http://18.206.208.70:8080";
 
 const TOKEN_KEY = "ritmolab_token";
-const USER_KEY = "ritmolab_user"; // {id,nombre,email,rol}
+const USER_KEY = "ritmolab_user";
 
+// login de usuario
 export async function loginRequest(email, password) {
-    const res = await fetch(`${API_URL}/api/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-    });
+  const res = await fetch(`${API_URL}/api/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
 
-    if (!res.ok) {
-        let msg = "Credenciales inválidas";
-        try {
-            const data = await res.json();
-            msg = data?.message || msg;
-        } catch (_) {
-            const text = await res.text().catch(() => "");
-            if (text) msg = text;
-        }
-        throw new Error(msg);
-    }
+  if (!res.ok) {
+    let msg = "Credenciales inválidas";
+    try {
+      const text = await res.text();
+      if (text) msg = text;
+    } catch {}
+    throw new Error(msg);
+  }
 
-    return res.json();
+  return res.json(); // { token, id, nombre, email, role }
 }
 
-export async function registerRequest({ nombre, email, password, rol = "CLIENTE" }) {
-    const res = await fetch(`${API_URL}/api/usuarios`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre, email, password, rol }),
-    });
+// registro de nuevo usuario
+export async function registerRequest({ nombre, email, password }) {
+  const res = await fetch(`${API_URL}/api/usuarios`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    // OJO: no mandes "rol" si tu backend lo define por defecto
+    body: JSON.stringify({ nombre, email, password }),
+  });
 
-    if (!res.ok) {
-        let msg = "No se pudo registrar";
-        try {
-            const data = await res.json();
-            msg = data?.message || msg;
-        } catch (_) {
-            const text = await res.text().catch(() => "");
-            if (text) msg = text;
-        }
-        throw new Error(msg);
-    }
+  if (!res.ok) {
+    let msg = "No se pudo registrar";
+    try {
+      const text = await res.text();
+      if (text) msg = text;
+    } catch {}
+    throw new Error(msg);
+  }
 
-    return res.json(); 
+  return res.json(); // Usuario creado
 }
 
-export function saveAuth(loginResponse) {
-    // { token, id, nombre, email, rol }
-    if (!loginResponse?.token) return;
 
-    localStorage.setItem(TOKEN_KEY, loginResponse.token);
+export function saveAuth(data) {
+  if (!data?.token) throw new Error("Respuesta de login sin token");
 
-    const user = {
-        id: loginResponse.id ?? null,
-        nombre: loginResponse.nombre ?? "",
-        email: loginResponse.email ?? "",
-        rol: loginResponse.rol ?? "", 
-    };
-    localStorage.setItem(USER_KEY, JSON.stringify(user));
-}
+  localStorage.setItem(TOKEN_KEY, data.token);
 
-export function logout() {
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(USER_KEY);
+  const user = {
+    id: data.id,
+    nombre: data.nombre,
+    email: data.email,
+    role: data.role, // "ROLE_ADMIN" o "ROLE_CLIENTE"
+  };
+
+  localStorage.setItem(USER_KEY, JSON.stringify(user));
 }
 
 export function getToken() {
-    return localStorage.getItem(TOKEN_KEY);
+  return localStorage.getItem(TOKEN_KEY);
 }
 
 export function getUser() {
-    const raw = localStorage.getItem(USER_KEY);
-    if (!raw) return null;
-    try {
-        return JSON.parse(raw);
-    } catch {
-        return null;
-    }
+  const raw = localStorage.getItem(USER_KEY);
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
 }
 
-export function getRole() {
-    return getUser()?.rol ?? "";
+export function logout() {
+  localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem(USER_KEY);
 }
 
 export function isLoggedIn() {
-    return !!getToken();
+  return !!getToken();
 }
 
 export function isAdmin() {
-    const role = getRole();
-    // soporta ambas formas
-    return role === "ADMIN" || role === "ROLE_ADMIN";
+  const u = getUser();
+  return u?.role === "ROLE_ADMIN";
 }
 
-export async function authFetch(path, options = {}) {
-    const token = getToken();
+// fetch con token en headers
+export async function authFetch(url, options = {}) {
+  const token = getToken();
 
-    const headers = new Headers(options.headers || {});
-    headers.set("Content-Type", headers.get("Content-Type") || "application/json");
+  const headers = {
+    ...(options.headers || {}),
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  };
 
-    if (token) headers.set("Authorization", `Bearer ${token}`);
-
-    const res = await fetch(`${API_URL}${path}`, {
-        ...options,
-        headers,
-    });
-
-    // si expira o es inválido, se limpia la sesión
-    if (res.status === 401) {
-        logout();
-    }
-
-    return res;
+  return fetch(url, { ...options, headers });
 }
 
+// perfil del usuario logueado desde el backend
+export async function meRequest() {
+  const res = await authFetch(`${API_URL}/api/auth/me`);
+  if (!res.ok) {
+    if (res.status === 401) throw new Error("Sesión expirada o token inválido");
+    throw new Error(`Error HTTP ${res.status}`);
+  }
+  return res.json(); // { id, nombre, email, role }
+}
