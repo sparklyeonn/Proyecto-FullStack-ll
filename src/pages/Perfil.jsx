@@ -42,9 +42,6 @@ function Perfil() {
     <Container className="my-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h2>Mi Perfil</h2>
-        <Button variant="outline-danger" onClick={handleLogout}>
-          Cerrar sesión
-        </Button>
       </div>
 
       {loading && <Spinner animation="border" />}
