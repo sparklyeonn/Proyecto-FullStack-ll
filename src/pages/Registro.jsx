@@ -1,31 +1,52 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; 
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { registerRequest, loginRequest, saveAuth } from "../services/authService";
 
 function Registro() {
-    const [nombre, setNombre] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordConfirm, setPasswordConfirm] = useState('');
+    const nav = useNavigate();
 
-    const navigate = useNavigate(); 
+    const [nombre, setNombre] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [passwordConfirm, setPasswordConfirm] = useState("");
 
-    const handleSubmit = (e) => {
-        e.preventDefault(); 
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
-        if (password === '' || passwordConfirm === '') {
-            alert('Las contraseñas no pueden estar vacías.');
-            return; 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError("");
+
+        const nombreLimpio = nombre.trim();
+        const emailLimpio = email.trim();
+
+        if (!nombreLimpio) return setError("Ingresa tu nombre.");
+        if (!emailLimpio) return setError("Ingresa tu correo.");
+
+        if (!password || !passwordConfirm) return setError("Las contraseñas no pueden estar vacías.");
+        if (password !== passwordConfirm) return setError("Las contraseñas no coinciden.");
+
+        try {
+            setLoading(true);
+
+            // 1) Se crea el usuario en /api/usuarios como rol de cliente
+            await registerRequest({
+                nombre: nombreLimpio,
+                email: emailLimpio,
+                password,
+                rol: "CLIENTE",
+            });
+
+            // 2) Auto-login usando /api/auth/login, este devuelve el token
+            const data = await loginRequest(emailLimpio, password);
+            saveAuth(data);
+
+            nav("/perfil", { replace: true });
+        } catch (e) {
+            setError(e.message || "No se pudo crear la cuenta");
+        } finally {
+            setLoading(false);
         }
-
-        if (password !== passwordConfirm) {
-            alert('Las contraseñas no coinciden.');
-            return; 
-        }
-
-        // Mensaje en caso de buen resultado
-        alert('¡Cuenta creada con éxito!');
-
-        navigate('/perfil'); 
     };
 
     return (
@@ -82,8 +103,16 @@ function Registro() {
                         />
                     </div>
 
-                    <button typeG="submit">Crear Cuenta</button>
+                    {error && <p style={{ color: "crimson", marginTop: 8 }}>{error}</p>}
+
+                    <button type="submit" disabled={loading}>
+                        {loading ? "Creando..." : "Crear Cuenta"}
+                    </button>
                 </form>
+
+                <p style={{ marginTop: 12 }}>
+                    ¿Ya tienes cuenta? <Link to="/login">Inicia sesión</Link>
+                </p>
             </section>
         </main>
     );
