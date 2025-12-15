@@ -56,7 +56,6 @@ function Perfil() {
           <h3>Información Personal</h3>
           <p><strong>Nombre:</strong> {user.nombre}</p>
           <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>Rol:</strong> {user.role}</p>
         </>
       )}
     </Container>
