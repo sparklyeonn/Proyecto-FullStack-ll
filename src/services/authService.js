@@ -3,6 +3,7 @@ const API_URL = "http://18.206.208.70:8080";
 const TOKEN_KEY = "ritmolab_token";
 const USER_KEY = "ritmolab_user";
 
+// login de usuario
 export async function loginRequest(email, password) {
   const res = await fetch(`${API_URL}/api/auth/login`, {
     method: "POST",
@@ -21,6 +22,28 @@ export async function loginRequest(email, password) {
 
   return res.json(); // { token, id, nombre, email, role }
 }
+
+// registro de nuevo usuario
+export async function registerRequest({ nombre, email, password }) {
+  const res = await fetch(`${API_URL}/api/usuarios`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    // OJO: no mandes "rol" si tu backend lo define por defecto
+    body: JSON.stringify({ nombre, email, password }),
+  });
+
+  if (!res.ok) {
+    let msg = "No se pudo registrar";
+    try {
+      const text = await res.text();
+      if (text) msg = text;
+    } catch {}
+    throw new Error(msg);
+  }
+
+  return res.json(); // Usuario creado
+}
+
 
 export function saveAuth(data) {
   if (!data?.token) throw new Error("Respuesta de login sin token");
@@ -65,7 +88,7 @@ export function isAdmin() {
   return u?.role === "ROLE_ADMIN";
 }
 
-// Helper para fetch con JWT
+// fetch con token en headers
 export async function authFetch(url, options = {}) {
   const token = getToken();
 
@@ -77,7 +100,7 @@ export async function authFetch(url, options = {}) {
   return fetch(url, { ...options, headers });
 }
 
-// endpoint para cargar perfil desde backend
+// perfil del usuario logueado desde el backend
 export async function meRequest() {
   const res = await authFetch(`${API_URL}/api/auth/me`);
   if (!res.ok) {
