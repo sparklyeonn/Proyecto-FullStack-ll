@@ -21,6 +21,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminProductos from './pages/admin/AdminProductos';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminUsuarios from './pages/admin/AdminUsuarios';
+import AdminRoute from "./components/AdminRoute";
 
 function Layout() {
   return (
@@ -57,6 +58,10 @@ function App() {
           <Route path="login" element={<AdminLogin />} />
           <Route path="productos" element={<AdminProductos />} />
           <Route path="usuarios" element={<AdminUsuarios />} />
+        </Route>
+
+        <Route element={<AdminRoute />}>
+          <Route path="/admin" element={<AdminProductos />} />
         </Route>
 
       </Routes>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap'; 
+import { isLoggedIn, isAdmin } from "../services/authService";
 
 function Header() {
     return (
