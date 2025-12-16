@@ -1,3 +1,4 @@
+// src/context/AppContext.jsx
 import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { getUser, isLoggedIn } from "../services/authService";
 import {
@@ -15,19 +16,16 @@ const AppContext = createContext(null);
 export function AppProvider({ children }) {
   const navigate = useNavigate();
 
-  // user como state (para que se actualice cuando haces login/logout)
   const [user, setUser] = useState(() => getUser());
 
-  // carrito state
   const [cart, setCart] = useState([]);
   const [cartLoading, setCartLoading] = useState(false);
   const [cartError, setCartError] = useState("");
 
-  // escucha un evento para refrescar user (lo disparas desde saveAuth/logout)
   useEffect(() => {
     const onAuthChanged = () => setUser(getUser());
     window.addEventListener("authChanged", onAuthChanged);
-    window.addEventListener("storage", onAuthChanged); // por si cambia en otra pestaña
+    window.addEventListener("storage", onAuthChanged);
     return () => {
       window.removeEventListener("authChanged", onAuthChanged);
       window.removeEventListener("storage", onAuthChanged);
@@ -57,7 +55,6 @@ export function AppProvider({ children }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.id]);
 
-  // Agregar al carrito (si no está logueado, manda a login)
   const handleAddToCart = async (productoId, cantidad = 1) => {
     if (!isLoggedIn()) {
       navigate("/login", { replace: true });
@@ -74,7 +71,6 @@ export function AppProvider({ children }) {
     }
   };
 
-  // Cambiar cantidad (si baja a 0 => elimina)
   const handleSetCantidad = async (itemId, cantidad) => {
     if (!user?.id) return;
 
@@ -115,16 +111,22 @@ export function AppProvider({ children }) {
     }
   };
 
-  // Checkout => crea pedido desde carrito y te manda al perfil
   const handleCheckout = async () => {
     if (!isLoggedIn()) {
       navigate("/login", { replace: true });
       return;
     }
-    if (!user?.id) return;
+    if (!user?.id) {
+      setCartError("No hay usuario autenticado");
+      return;
+    }
 
     try {
       setCartError("");
+
+      // Debug útil (lo puedes borrar después)
+      console.log("Checkout user:", user);
+
       await crearPedido(user.id);
       setCart([]);
       navigate("/perfil", { replace: true });
