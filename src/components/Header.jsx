@@ -27,7 +27,6 @@ function Header() {
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto align-items-lg-center">
             <Nav.Link as={NavLink} to="/" end>Inicio</Nav.Link>
@@ -41,7 +40,7 @@ function Header() {
               <Nav.Link as={NavLink} to="/login">Mi Cuenta</Nav.Link>
             ) : (
               <>
-                <Nav.Link as={NavLink} to={admin ? "/admin" : "/perfil"}>
+                <Nav.Link as={NavLink} to={admin ? "/admin/productos" : "/perfil"}>
                   {admin ? "Admin" : "Mi Perfil"}
                 </Nav.Link>
 

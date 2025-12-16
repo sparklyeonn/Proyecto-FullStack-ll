@@ -16,12 +16,9 @@ import Registro from "./pages/Registro";
 import Carrito from "./pages/Carrito";
 
 // admin
-import AdminLayout from "./components/AdminLayout";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import AdminProductos from "./pages/admin/AdminProductos";
-import AdminUsuarios from "./pages/admin/AdminUsuarios";
-import AdminLogin from "./pages/admin/AdminLogin";
 import AdminRoute from "./components/AdminRoute";
+import PrivateRoute from "./components/PrivateRoute";
+import AdminProductos from "./pages/admin/AdminProductos";
 
 function Layout() {
   return (
@@ -37,7 +34,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* CLIENTE */}
+        {/* TODO lo público + layout */}
         <Route path="/" element={<Layout />}>
           <Route index element={<Inicio />} />
           <Route path="cds" element={<Cds />} />
@@ -45,35 +42,20 @@ function App() {
           <Route path="accesorios" element={<Accesorios />} />
           <Route path="vinilos" element={<Vinilos />} />
           <Route path="login" element={<Login />} />
-          <Route path="perfil" element={<Perfil />} />
           <Route path="producto/:id" element={<ProductoDetalle />} />
           <Route path="registro" element={<Registro />} />
           <Route path="carrito" element={<Carrito />} />
-        </Route>
 
-        {/* ADMIN LOGIN (público) */}
-        <Route path="/admin/login" element={<AdminLogin />} />
-
-        {/* ADMIN (protegido) */}
-        <Route element={<AdminRoute />}>
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<AdminDashboard />} />
-            <Route path="productos" element={<AdminProductos />} />
-            <Route path="usuarios" element={<AdminUsuarios />} />
+          {/* PERFIL */}
+          <Route element={<PrivateRoute />}>
+            <Route path="perfil" element={<Perfil />} />
           </Route>
-        </Route>
 
-        {/* 404 */}
-        <Route path="*" element={<Layout />}>
-          <Route
-            index
-            element={
-              <div style={{ padding: 24 }}>
-                <h2>404</h2>
-                <p>Página no encontrada</p>
-              </div>
-            }
-          />
+          {/* ADMIN */}
+          <Route element={<AdminRoute />}>
+            <Route path="admin/productos" element={<AdminProductos />} />
+            {/* después agregas: admin/usuarios, admin/categorias, etc */}
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Container, Button, Alert, Spinner } from "react-bootstrap";
+import { Container, Alert, Spinner, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { getToken, logout, meRequest } from "../services/authService";
+import { getToken, meRequest, isAdmin, logout } from "../services/authService";
 
 function Perfil() {
   const nav = useNavigate();
@@ -16,11 +16,16 @@ function Perfil() {
       return;
     }
 
+    // si es admin, no debería ver perfil cliente
+    if (isAdmin()) {
+      nav("/admin/productos", { replace: true });
+      return;
+    }
+
     const loadMe = async () => {
       try {
         setLoading(true);
         setError("");
-
         const data = await meRequest();
         setUser(data);
       } catch (e) {
@@ -42,6 +47,9 @@ function Perfil() {
     <Container className="my-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h2>Mi Perfil</h2>
+        <Button variant="outline-danger" onClick={handleLogout}>
+          Cerrar sesión
+        </Button>
       </div>
 
       {loading && <Spinner animation="border" />}

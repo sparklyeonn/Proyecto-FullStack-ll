@@ -28,12 +28,11 @@ function Login() {
 
     try {
       setLoading(true);
-
-      // Debe devolver: { token, id, nombre, email, role }
-      const data = await loginRequest(emailLimpio, password);
+      const data = await loginRequest(emailLimpio, password); // { token, id, nombre, email, role }
       saveAuth(data);
 
-      if (isAdmin()) nav("/admin", { replace: true });
+      // admin va al CRUD
+      if (isAdmin()) nav("/admin/productos", { replace: true });
       else nav("/perfil", { replace: true });
     } catch (e) {
       setError(e.message || "No se pudo iniciar sesión");
