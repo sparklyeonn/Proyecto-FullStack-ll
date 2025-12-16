@@ -1,18 +1,11 @@
-import { getToken, clearAuth } from "./authService";
+import axios from "axios";
 
-export async function authFetch(url, options = {}) {
-    const token = getToken();
+export const api = axios.create({
+  baseURL: "http://18.206.208.70:8080",
+});
 
-    const headers = {
-        ...(options.headers || {}),
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-    };
-
-    const res = await fetch(url, { ...options, headers });
-
-    // Si expiró o no es válido
-    if (res.status === 401 || res.status === 403) {
-    }
-
-    return res;
-}
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
