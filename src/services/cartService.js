@@ -1,5 +1,6 @@
-const API_URL = "http://18.206.208.70:8080";
 import { authFetch } from "./authService";
+
+const API_URL = "http://18.206.208.70:8080";
 
 export async function getCarritoByUsuario(usuarioId) {
   const res = await authFetch(`${API_URL}/api/carritos/usuario/${usuarioId}`);

@@ -1,6 +1,7 @@
 // src/services/pedidoService.js
-const API_URL = "http://18.206.208.70:8080";
 import { authFetch } from "./authService";
+
+const API_URL = "http://18.206.208.70:8080";
 
 export async function crearPedido(usuarioId) {
   const res = await authFetch(`${API_URL}/api/pedidos/usuario/${usuarioId}`, {
