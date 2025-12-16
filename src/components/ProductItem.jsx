@@ -10,7 +10,8 @@ function ProductItem({ producto }) {
   if (!producto) return null;
 
   const onAddToCart = () => {
-    handleAddToCart(producto, 1);
+    //mandamos ID + cantidad para que el backend cree el CarritoItem
+    handleAddToCart(producto.id, 1);
   };
 
   return (
@@ -35,10 +36,14 @@ function ProductItem({ producto }) {
 
         {producto.artista && <p className="mb-1">{producto.artista}</p>}
         {producto.tipo && <p className="mb-2 text-muted">{producto.tipo}</p>}
-        {producto.categoria?.nombre && <p className="mb-2 small">{producto.categoria.nombre}</p>}
+        {producto.categoria?.nombre && (
+          <p className="mb-2 small">{producto.categoria.nombre}</p>
+        )}
 
         <div className="mt-auto">
-          <span className="price">${Number(producto.precio).toLocaleString("es-CL")}</span>
+          <span className="price">
+            ${Number(producto.precio).toLocaleString("es-CL")}
+          </span>
           <br />
           <Button className="btn-ritmo mt-2" onClick={onAddToCart}>
             Añadir al carrito

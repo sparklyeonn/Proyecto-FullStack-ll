@@ -1,42 +1,50 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-import { isLoggedIn, getUser, setRedirectAfterLogin } from "../services/authService";
+import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { getUser, isLoggedIn } from "../services/authService";
 import {
   getCarritoByUsuario,
   addItem,
   updateItemCantidad,
   deleteItem,
   clearCarrito,
-} from "../services/cartService";
+} from "../services/carritoService";
+import { crearPedido } from "../services/pedidoService";
+import { useNavigate } from "react-router-dom";
 
-const AppContext = createContext();
+const AppContext = createContext(null);
 
-export const AppProvider = ({ children }) => {
-  const nav = useNavigate();
+export function AppProvider({ children }) {
+  const navigate = useNavigate();
 
+  // user como state (para que se actualice cuando haces login/logout)
+  const [user, setUser] = useState(() => getUser());
+
+  // carrito state
   const [cart, setCart] = useState([]);
   const [cartLoading, setCartLoading] = useState(false);
   const [cartError, setCartError] = useState("");
 
+  // escucha un evento para refrescar user (lo disparas desde saveAuth/logout)
+  useEffect(() => {
+    const onAuthChanged = () => setUser(getUser());
+    window.addEventListener("authChanged", onAuthChanged);
+    window.addEventListener("storage", onAuthChanged); // por si cambia en otra pestaña
+    return () => {
+      window.removeEventListener("authChanged", onAuthChanged);
+      window.removeEventListener("storage", onAuthChanged);
+    };
+  }, []);
 
-  const normalizeCartResponse = (carrito) => carrito?.items ?? [];
-
-  const refreshCart = async () => {
-    if (!isLoggedIn()) {
+  const loadCart = async () => {
+    if (!user?.id) {
       setCart([]);
       return;
     }
 
-    const u = getUser();
-    if (!u?.id) return;
-
-    setCartLoading(true);
-    setCartError("");
-
     try {
-      const carrito = await getCarritoByUsuario(u.id);
-      setCart(normalizeCartResponse(carrito));
+      setCartError("");
+      setCartLoading(true);
+      const data = await getCarritoByUsuario(user.id);
+      setCart(data?.items || []);
     } catch (e) {
       setCartError(e.message || "No se pudo cargar el carrito");
     } finally {
@@ -45,95 +53,107 @@ export const AppProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    refreshCart();
-  }, []);
+    loadCart();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
 
-  const requireLogin = (redirectTo = "/carrito") => {
-    if (isLoggedIn()) return true;
-    setRedirectAfterLogin(redirectTo);
-    nav("/login", { replace: true });
-    return false;
-  };
+  // Agregar al carrito (si no está logueado, manda a login)
+  const handleAddToCart = async (productoId, cantidad = 1) => {
+    if (!isLoggedIn()) {
+      navigate("/login", { replace: true });
+      return;
+    }
+    if (!user?.id) return;
 
-  const handleAddToCart = async (producto, cantidad = 1) => {
-    if (!requireLogin("/carrito")) return;
-
-    const u = getUser();
     try {
       setCartError("");
-      await addItem(u.id, producto.id, cantidad);
-      await refreshCart();
-      alert(`¡"${producto.titulo}" se añadió al carrito!`);
+      await addItem(user.id, productoId, cantidad);
+      await loadCart();
     } catch (e) {
       setCartError(e.message || "No se pudo agregar al carrito");
     }
   };
 
-  const handleSetCantidad = async (itemId, nuevaCantidad) => {
-    if (!requireLogin("/carrito")) return;
+  // Cambiar cantidad (si baja a 0 => elimina)
+  const handleSetCantidad = async (itemId, cantidad) => {
+    if (!user?.id) return;
 
-    const u = getUser();
     try {
       setCartError("");
-      if (nuevaCantidad <= 0) {
-        await deleteItem(u.id, itemId);
+      if (cantidad <= 0) {
+        await deleteItem(user.id, itemId);
       } else {
-        await updateItemCantidad(u.id, itemId, nuevaCantidad);
+        await updateItemCantidad(user.id, itemId, cantidad);
       }
-      await refreshCart();
+      await loadCart();
     } catch (e) {
       setCartError(e.message || "No se pudo actualizar la cantidad");
     }
   };
 
   const handleRemoveFromCart = async (itemId) => {
-    if (!requireLogin("/carrito")) return;
+    if (!user?.id) return;
 
-    const u = getUser();
     try {
       setCartError("");
-      await deleteItem(u.id, itemId);
-      await refreshCart();
+      await deleteItem(user.id, itemId);
+      await loadCart();
     } catch (e) {
       setCartError(e.message || "No se pudo eliminar el item");
     }
   };
 
   const handleClearCart = async () => {
-    if (!requireLogin("/carrito")) return;
+    if (!user?.id) return;
 
-    const u = getUser();
     try {
       setCartError("");
-      await clearCarrito(u.id);
-      await refreshCart();
+      await clearCarrito(user.id);
+      setCart([]);
     } catch (e) {
       setCartError(e.message || "No se pudo vaciar el carrito");
     }
   };
 
+  // Checkout => crea pedido desde carrito y te manda al perfil
   const handleCheckout = async () => {
-    if (!requireLogin("/carrito")) return;
-    alert("Checkout pendiente: falta endpoint de pedido/checkout en el backend.");
+    if (!isLoggedIn()) {
+      navigate("/login", { replace: true });
+      return;
+    }
+    if (!user?.id) return;
+
+    try {
+      setCartError("");
+      await crearPedido(user.id);
+      setCart([]);
+      navigate("/perfil", { replace: true });
+    } catch (e) {
+      setCartError(e.message || "No se pudo realizar el pago");
+    }
   };
 
-  const value = {
-    cart,
-    cartLoading,
-    cartError,
-    refreshCart,
-    handleAddToCart,
-    handleSetCantidad,
-    handleRemoveFromCart,
-    handleClearCart,
-    handleCheckout,
-  };
+  const value = useMemo(
+    () => ({
+      user,
+      cart,
+      cartLoading,
+      cartError,
+      loadCart,
+      handleAddToCart,
+      handleSetCantidad,
+      handleRemoveFromCart,
+      handleClearCart,
+      handleCheckout,
+    }),
+    [user, cart, cartLoading, cartError]
+  );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
-};
+}
 
 export const useApp = () => {
   const ctx = useContext(AppContext);
-  if (!ctx) throw new Error("useApp debe ser usado dentro de un AppProvider");
+  if (!ctx) throw new Error("useApp debe usarse dentro de AppProvider");
   return ctx;
 };

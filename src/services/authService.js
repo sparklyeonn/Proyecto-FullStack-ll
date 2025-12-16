@@ -61,6 +61,7 @@ export function saveAuth(data) {
   };
 
   localStorage.setItem(USER_KEY, JSON.stringify(user));
+  window.dispatchEvent(new Event("authChanged"));
 }
 
 export function getToken() {
@@ -81,6 +82,7 @@ export function logout() {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
   localStorage.removeItem(REDIRECT_KEY);
+  window.dispatchEvent(new Event("authChanged"));
 }
 
 export function isLoggedIn() {
