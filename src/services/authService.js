@@ -1,12 +1,15 @@
+// src/services/authService.js
 const API_URL = "http://18.206.208.70:8080";
 
-const TOKEN_KEY = "ritmolab_token";
-const USER_KEY = "ritmolab_user";
-
-// redirect después de login
+export const TOKEN_KEY = "ritmolab_token";
+export const USER_KEY = "ritmolab_user";
 const REDIRECT_KEY = "ritmolab_redirect_after_login";
 
-// login de usuario
+/**
+ * Login
+ * Backend: POST /api/auth/login
+ * Retorna: { token, id, nombre, email, rol } o { token, id, nombre, email, role }
+ */
 export async function loginRequest(email, password) {
   const res = await fetch(`${API_URL}/api/auth/login`, {
     method: "POST",
@@ -23,10 +26,13 @@ export async function loginRequest(email, password) {
     throw new Error(msg);
   }
 
-  return res.json(); // { token, id, nombre, email, rol } o { token, id, nombre, email, role }
+  return res.json();
 }
 
-// registro de nuevo usuario (cliente)
+/**
+ * Registro de usuario cliente
+ * Backend: POST /api/usuarios
+ */
 export async function registerRequest({ nombre, email, password }) {
   const res = await fetch(`${API_URL}/api/usuarios`, {
     method: "POST",
@@ -46,12 +52,17 @@ export async function registerRequest({ nombre, email, password }) {
   return res.json();
 }
 
+/**
+ * Guarda token + usuario en localStorage
+ */
 export function saveAuth(data) {
   if (!data?.token) throw new Error("Respuesta de login sin token");
 
   const role = data.role ?? data.rol ?? null;
 
   localStorage.setItem(TOKEN_KEY, data.token);
+
+  localStorage.setItem("token", data.token);
 
   const user = {
     id: data.id,
@@ -65,7 +76,7 @@ export function saveAuth(data) {
 }
 
 export function getToken() {
-  return localStorage.getItem(TOKEN_KEY);
+  return localStorage.getItem(TOKEN_KEY) || localStorage.getItem("token");
 }
 
 export function getUser() {
@@ -80,6 +91,7 @@ export function getUser() {
 
 export function logout() {
   localStorage.removeItem(TOKEN_KEY);
+  localStorage.removeItem("token"); // compat
   localStorage.removeItem(USER_KEY);
   localStorage.removeItem(REDIRECT_KEY);
   window.dispatchEvent(new Event("authChanged"));
@@ -106,7 +118,9 @@ export function consumeRedirectAfterLogin() {
   return path;
 }
 
-// fetch con token en headers
+/**
+ * fetch con token en headers (para endpoints que usen fetch)
+ */
 export async function authFetch(url, options = {}) {
   const token = getToken();
   const headers = {
@@ -116,7 +130,10 @@ export async function authFetch(url, options = {}) {
   return fetch(url, { ...options, headers });
 }
 
-// perfil del usuario logueado desde el backend
+/**
+ * Perfil del usuario logueado
+ * Backend: GET /api/auth/me
+ */
 export async function meRequest() {
   const res = await authFetch(`${API_URL}/api/auth/me`);
   if (!res.ok) {
