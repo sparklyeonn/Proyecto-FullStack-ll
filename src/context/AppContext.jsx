@@ -1,82 +1,139 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { isLoggedIn, getUser, setRedirectAfterLogin } from "../services/authService";
+import {
+  getCarritoByUsuario,
+  addItem,
+  updateItemCantidad,
+  deleteItem,
+  clearCarrito,
+} from "../services/cartService";
 
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
+  const nav = useNavigate();
 
-    // CARRITO
+  const [cart, setCart] = useState([]);
+  const [cartLoading, setCartLoading] = useState(false);
+  const [cartError, setCartError] = useState("");
 
-    // estado del carrito
-    const [cart, setCart] = useState([]);
 
-    const handleAddToCart = (producto) => {
-        const productoExistente = cart.find(item => item.id === producto.id);
+  const normalizeCartResponse = (carrito) => carrito?.items ?? [];
 
-        if (productoExistente) {
-            setCart(cart.map(item =>
-                item.id === producto.id ? { ...item, cantidad: item.cantidad + 1 } : item
-            ));
-        } else {
-            setCart([...cart, { ...producto, cantidad: 1 }]);
-        }
-        alert(`¡"${producto.titulo}" se añadió al carrito!`);
-    };
+  const refreshCart = async () => {
+    if (!isLoggedIn()) {
+      setCart([]);
+      return;
+    }
 
-    const handleRemoveFromCart = (productoId) => {
-        setCart(cart.filter(item => item.id !== productoId));
-    };
+    const u = getUser();
+    if (!u?.id) return;
 
-    const handleClearCart = () => {
-        setCart([]);
-    };
+    setCartLoading(true);
+    setCartError("");
 
-    // autenticacion 
-    const [user, setUser] = useState(null);
+    try {
+      const carrito = await getCarritoByUsuario(u.id);
+      setCart(normalizeCartResponse(carrito));
+    } catch (e) {
+      setCartError(e.message || "No se pudo cargar el carrito");
+    } finally {
+      setCartLoading(false);
+    }
+  };
 
-    useEffect(() => {
-        const usuarioGuardado = localStorage.getItem('usuarioLogueado');
-        if (usuarioGuardado) {
-            setUser(JSON.parse(usuarioGuardado));
-        }
-    }, []);
+  useEffect(() => {
+    refreshCart();
+  }, []);
 
-    // INICIO SESION
+  const requireLogin = (redirectTo = "/carrito") => {
+    if (isLoggedIn()) return true;
+    setRedirectAfterLogin(redirectTo);
+    nav("/login", { replace: true });
+    return false;
+  };
 
-    // iniciar sesion
-    const handleLogin = (userData) => {
-        // verificacion de contraseña
-        setUser(userData);
-        localStorage.setItem('usuarioLogueado', JSON.stringify(userData));
-    };
+  const handleAddToCart = async (producto, cantidad = 1) => {
+    if (!requireLogin("/carrito")) return;
 
-    // cerrar sesion
-    const handleLogout = () => {
-        setUser(null);
-        localStorage.removeItem('usuarioLogueado');
-    };
+    const u = getUser();
+    try {
+      setCartError("");
+      await addItem(u.id, producto.id, cantidad);
+      await refreshCart();
+      alert(`¡"${producto.titulo}" se añadió al carrito!`);
+    } catch (e) {
+      setCartError(e.message || "No se pudo agregar al carrito");
+    }
+  };
 
-    //
-    const value = {
-        cart,
-        user,
-        handleAddToCart,
-        handleLogin,
-        handleLogout,
-        handleRemoveFromCart,
-        handleClearCart
-    };
+  const handleSetCantidad = async (itemId, nuevaCantidad) => {
+    if (!requireLogin("/carrito")) return;
 
-    return (
-        <AppContext.Provider value={value}>
-            {children}
-        </AppContext.Provider>
-    );
+    const u = getUser();
+    try {
+      setCartError("");
+      if (nuevaCantidad <= 0) {
+        await deleteItem(u.id, itemId);
+      } else {
+        await updateItemCantidad(u.id, itemId, nuevaCantidad);
+      }
+      await refreshCart();
+    } catch (e) {
+      setCartError(e.message || "No se pudo actualizar la cantidad");
+    }
+  };
+
+  const handleRemoveFromCart = async (itemId) => {
+    if (!requireLogin("/carrito")) return;
+
+    const u = getUser();
+    try {
+      setCartError("");
+      await deleteItem(u.id, itemId);
+      await refreshCart();
+    } catch (e) {
+      setCartError(e.message || "No se pudo eliminar el item");
+    }
+  };
+
+  const handleClearCart = async () => {
+    if (!requireLogin("/carrito")) return;
+
+    const u = getUser();
+    try {
+      setCartError("");
+      await clearCarrito(u.id);
+      await refreshCart();
+    } catch (e) {
+      setCartError(e.message || "No se pudo vaciar el carrito");
+    }
+  };
+
+  const handleCheckout = async () => {
+    if (!requireLogin("/carrito")) return;
+    alert("Checkout pendiente: falta endpoint de pedido/checkout en el backend.");
+  };
+
+  const value = {
+    cart,
+    cartLoading,
+    cartError,
+    refreshCart,
+    handleAddToCart,
+    handleSetCantidad,
+    handleRemoveFromCart,
+    handleClearCart,
+    handleCheckout,
+  };
+
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
 export const useApp = () => {
-    const context = useContext(AppContext);
-    if (!context) {
-        throw new Error('useApp debe ser usado dentro de un AppProvider');
-    }
-    return context;
+  const ctx = useContext(AppContext);
+  if (!ctx) throw new Error("useApp debe ser usado dentro de un AppProvider");
+  return ctx;
 };

@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { loginRequest, saveAuth, isAdmin } from "../services/authService";
+import {
+  loginRequest,
+  saveAuth,
+  isAdmin,
+  consumeRedirectAfterLogin,
+} from "../services/authService";
 
 function Login() {
   const nav = useNavigate();
@@ -28,10 +33,18 @@ function Login() {
 
     try {
       setLoading(true);
-      const data = await loginRequest(emailLimpio, password); // { token, id, nombre, email, role }
+
+      const data = await loginRequest(emailLimpio, password);
       saveAuth(data);
 
-      // admin va al CRUD
+      // si venía redirigido por “comprar” o “agregar al carrito”
+      const redirect = consumeRedirectAfterLogin();
+      if (redirect) {
+        nav(redirect, { replace: true });
+        return;
+      }
+
+      // ruta normal según rol
       if (isAdmin()) nav("/admin/productos", { replace: true });
       else nav("/perfil", { replace: true });
     } catch (e) {

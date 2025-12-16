@@ -3,6 +3,9 @@ const API_URL = "http://18.206.208.70:8080";
 const TOKEN_KEY = "ritmolab_token";
 const USER_KEY = "ritmolab_user";
 
+// redirect después de login
+const REDIRECT_KEY = "ritmolab_redirect_after_login";
+
 // login de usuario
 export async function loginRequest(email, password) {
   const res = await fetch(`${API_URL}/api/auth/login`, {
@@ -46,7 +49,6 @@ export async function registerRequest({ nombre, email, password }) {
 export function saveAuth(data) {
   if (!data?.token) throw new Error("Respuesta de login sin token");
 
-  // backend puede traer rol o role
   const role = data.role ?? data.rol ?? null;
 
   localStorage.setItem(TOKEN_KEY, data.token);
@@ -78,6 +80,7 @@ export function getUser() {
 export function logout() {
   localStorage.removeItem(TOKEN_KEY);
   localStorage.removeItem(USER_KEY);
+  localStorage.removeItem(REDIRECT_KEY);
 }
 
 export function isLoggedIn() {
@@ -86,9 +89,19 @@ export function isLoggedIn() {
 
 export function isAdmin() {
   const u = getUser();
-  // por si quedó guardado como rol (viejo)
   const role = u?.role ?? u?.rol;
   return role === "ROLE_ADMIN";
+}
+
+// redirect helpers
+export function setRedirectAfterLogin(path) {
+  localStorage.setItem(REDIRECT_KEY, path);
+}
+
+export function consumeRedirectAfterLogin() {
+  const path = localStorage.getItem(REDIRECT_KEY);
+  if (path) localStorage.removeItem(REDIRECT_KEY);
+  return path;
 }
 
 // fetch con token en headers
@@ -108,5 +121,5 @@ export async function meRequest() {
     if (res.status === 401) throw new Error("Sesión expirada o token inválido");
     throw new Error(`Error HTTP ${res.status}`);
   }
-  return res.json(); 
+  return res.json();
 }
