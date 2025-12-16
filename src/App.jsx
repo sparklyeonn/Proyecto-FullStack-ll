@@ -52,10 +52,12 @@ function App() {
           </Route>
 
           {/* ADMIN */}
-          <Route element={<AdminRoute />}>
-            <Route path="admin/productos" element={<AdminProductos />} />
-            {/* después agregas: admin/usuarios, admin/categorias, etc */}
+          <Route path="/admin" element={<AdminRoute />}>
+            <Route index element={<AdminDashboard />} />
+            <Route path="productos" element={<AdminProductos />} />
+            <Route path="usuarios" element={<AdminUsuarios />} />
           </Route>
+
         </Route>
       </Routes>
     </BrowserRouter>
