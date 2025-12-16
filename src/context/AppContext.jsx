@@ -6,7 +6,7 @@ import {
   updateItemCantidad,
   deleteItem,
   clearCarrito,
-} from "../services/carritoService";
+} from "../services/cartService";
 import { crearPedido } from "../services/pedidoService";
 import { useNavigate } from "react-router-dom";
 
