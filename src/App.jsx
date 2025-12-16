@@ -1,3 +1,4 @@
+// src/App.jsx
 import React from "react";
 import "./styles.css";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
@@ -15,10 +16,15 @@ import ProductoDetalle from "./pages/ProductoDetalle";
 import Registro from "./pages/Registro";
 import Carrito from "./pages/Carrito";
 
-// admin
+// guards
 import AdminRoute from "./components/AdminRoute";
 import PrivateRoute from "./components/PrivateRoute";
+
+// admin
+import AdminLayout from "./components/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProductos from "./pages/admin/AdminProductos";
+import AdminUsuarios from "./pages/admin/AdminUsuarios";
 
 function Layout() {
   return (
@@ -34,7 +40,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* TODO lo público + layout */}
+        {/* PUBLICO + LAYOUT */}
         <Route path="/" element={<Layout />}>
           <Route index element={<Inicio />} />
           <Route path="cds" element={<Cds />} />
@@ -52,12 +58,13 @@ function App() {
           </Route>
 
           {/* ADMIN */}
-          <Route path="/admin" element={<AdminRoute />}>
-            <Route index element={<AdminDashboard />} />
-            <Route path="productos" element={<AdminProductos />} />
-            <Route path="usuarios" element={<AdminUsuarios />} />
+          <Route element={<AdminRoute />}>
+            <Route path="admin" element={<AdminLayout />}>
+              <Route index element={<AdminDashboard />} />
+              <Route path="productos" element={<AdminProductos />} />
+              <Route path="usuarios" element={<AdminUsuarios />} />
+            </Route>
           </Route>
-
         </Route>
       </Routes>
     </BrowserRouter>
